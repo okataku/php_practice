@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && strlen($_GET["i
       header("Location: /practices/practice08/board.php");
     }
   } else {
-    $error = "コメントを登録できませんでした。";
+    $error = "コメントを登録できませんでした。。";
   }
 } else {
   header("HTTP/1.1 301 Moved Permanently");
