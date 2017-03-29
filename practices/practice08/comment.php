@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && strlen($_GET["i
         font-size: 18pt;
         margin: 10px 10px 5px;
         padding-left: 35px;
-        background-image: url("../../images/logo.gif");
+        background-image: url("../../images/logo.png");
         background-repeat: no-repeat;
         background-size: 25px 25px;
       }
