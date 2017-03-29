@@ -5,7 +5,7 @@ $hasError = false;
 // セッションに関連付いたユーザーであるとき掲示板ページへリダイレクトします。
 if (isset($_SESSION["id"]) && $_SESSION["id"] != null) {
   header("HTTP/1.1 301 Moved Permanently");
-  header("Location: practices/practice07/board.php");
+  header("Location: /practices/practice07/board.php");
   exit();
 }
 
@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && isset($_POST[
   if ($statement->rowCount() > 0) {
     $_SESSION["id"] = $_POST["id"];
     header("HTTP/1.1 301 Moved Permanently");
-    header("Location: practices/practice07/board.php");
+    header("Location: /practices/practice07/board.php");
     exit();
   } else {
     $hasError = true;
