@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && strlen($_GET["i
     $createAt = $row["create_at"];
   } else {
     header("HTTP/1.1 301 Moved Permanently");
-    header("Location: practices/practice08/board.php");
+    header("Location: /practices/practice08/board.php");
   }
 } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (isset($_POST["entryId"]) && isset($_POST["comment"])) {
@@ -37,14 +37,14 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && strlen($_GET["i
       $error = "コメントを登録できませんでした。";
     } else {
       header("HTTP/1.1 301 Moved Permanently");
-      header("Location: practices/practice08/board.php"); 
+      header("Location: /practices/practice08/board.php");
     }
   } else {
     $error = "コメントを登録できませんでした。";
   }
 } else {
   header("HTTP/1.1 301 Moved Permanently");
-  header("Location: practices/practice08/board.php");
+  header("Location: /practices/practice08/board.php");
 }
 
 ?>
@@ -53,17 +53,17 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && strlen($_GET["i
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>CSS 画像掲示板 -コメント-</title>
-  
+
     <style type="text/css">
       body {
       width: 600px;
         margin: 0px auto;
       }
-      
+
       #header {
-      
+
       }
-      
+
       #title {
         font-size: 18pt;
         margin: 10px 10px 5px;
@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && strlen($_GET["i
         background-repeat: no-repeat;
         background-size: 25px 25px;
       }
-      
+
       #main {
         margin: 10px 0px 10px;
         padding-top: 30px;
@@ -81,11 +81,11 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && strlen($_GET["i
         border-top: 1px solid #808080;
         border-bottom: 1px solid #808080;
       }
-      
+
       #main tbody tr td {
       vertical-align: top;
       }
-    
+
       #footer {
         padding: 0px 10px;
       }
@@ -100,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && strlen($_GET["i
       <form action="./comment.php" method="post">
         <input type="hidden" name="entryId" value="<?php print $entryId ?>" />
         <table>
-          <tbody>            
+          <tbody>
             <tr>
               <td colspan="2"><span>[投稿者]&nbsp;<?php print $username ?>&nbsp;&nbsp;<?php print $createAt ?></span></td>
               </tr>
@@ -119,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && strlen($_GET["i
       </form>
     </div>
     <div id="footer">
-      <div style="width: 350px; margin: 0px auto; font-size: 9pt; color: #808080;">Copyright © 2013 Central Soft Service Co.,Ltd. All rights reserved.</div>
+      <div style="width: 350px; margin: 0px auto; font-size: 9pt; color: #808080;">Copyright © 20XX XXXXXXXXXX Co.,Ltd. All rights reserved.</div>
     </div>
   </body>
 </html>

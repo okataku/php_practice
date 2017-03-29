@@ -112,7 +112,7 @@ if (!isset($_SESSION["id"]) || $_SESSION["id"] == null) {
   </div>
 
   <div id="footer">
-    <div style="width: 350px; margin:10px auto 0px; font-size: 9pt; color: #808080;">Copyright © 2013 Central Soft Service Co.,Ltd. All rights reserved.</div>
+    <div style="width: 350px; margin:10px auto 0px; font-size: 9pt; color: #808080;">Copyright © 20XX XXXXXXXXXX Co.,Ltd. All rights reserved.</div>
   </div>
 </body>
 </html>

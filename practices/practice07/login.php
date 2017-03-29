@@ -101,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && isset($_POST[
     </form>
   </div>
   <div id="footer">
-    <div style="width: 350px; margin: 0px auto; font-size: 9pt; color: #808080;">Copyright © 2013 Central Soft Service Co.,Ltd. All rights reserved.</div>
+    <div style="width: 350px; margin: 0px auto; font-size: 9pt; color: #808080;">Copyright © 20XX XXXXXXXXXX Co.,Ltd. All rights reserved.</div>
   </div>
 </body>
 </html>
