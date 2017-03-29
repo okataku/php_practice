@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" &&
   }
 } else {
   header("HTTP/1.1 301 Moved Permanently");
-  header("Location: http://localhost/master/practices/practice01/input.html");
+  header("Location: practices/practice01/input.html");
 }
 ?>
 

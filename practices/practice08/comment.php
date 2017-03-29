@@ -7,7 +7,7 @@ session_start();
 
 if (!isset($_SESSION["id"]) || strlen($_SESSION["id"]) == 0) {
   header("HTTP/1.1 301 Moved Permanently");
-  header("Location: http://localhost/master/practices/practice07/login.php");
+  header("Location: practices/practice07/login.php");
 } else {
   $userId = $_SESSION["id"];
 }
@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && strlen($_GET["i
     $createAt = $row["create_at"];
   } else {
     header("HTTP/1.1 301 Moved Permanently");
-    header("Location: http://localhost/master/practices/practice08/board.php");
+    header("Location: practices/practice08/board.php");
   }
 } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (isset($_POST["entryId"]) && isset($_POST["comment"])) {
@@ -37,14 +37,14 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && strlen($_GET["i
       $error = "コメントを登録できませんでした。";
     } else {
       header("HTTP/1.1 301 Moved Permanently");
-      header("Location: http://localhost/master/practices/practice08/board.php"); 
+      header("Location: practices/practice08/board.php"); 
     }
   } else {
     $error = "コメントを登録できませんでした。";
   }
 } else {
   header("HTTP/1.1 301 Moved Permanently");
-  header("Location: http://localhost/master/practices/practice08/board.php");
+  header("Location: practices/practice08/board.php");
 }
 
 ?>

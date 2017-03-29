@@ -6,6 +6,6 @@ if (isset($_SESSION["id"]) && strlen($_SESSION["id"]) > 0) {
   setcookie("PHPSESSID", "", time() - 3600 * 24);
 }
 header("HTTP/1.1 301 Moved Permanently");
-header("Location: http://localhost/master/practices/practice07/login.php");
+header("Location: practices/practice07/login.php");
 exit();
 ?>

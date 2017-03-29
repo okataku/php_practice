@@ -117,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && strlen($_GET["i
   }
 } else {
   header("HTTP/1.1 301 Moved Permanently");
-  header("Location: http://localhost/master/practices/practice04/select.php");
+  header("Location: practices/practice04/select.php");
 }
 
 ?>

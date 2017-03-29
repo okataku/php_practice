@@ -7,7 +7,7 @@ session_start();
 
 if (!isset($_SESSION["id"]) || $_SESSION["id"] == null) {
   header("HTTP/1.1 301 Moved Permanently");
-  header("Location: http://localhost/master/practices/practice07/login.php");
+  header("Location: practices/practice07/login.php");
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {

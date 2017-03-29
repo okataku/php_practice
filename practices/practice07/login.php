@@ -5,7 +5,7 @@ $hasError = false;
 // セッションに関連付いたユーザーであるとき掲示板ページへリダイレクトします。
 if (isset($_SESSION["id"]) && $_SESSION["id"] != null) {
   header("HTTP/1.1 301 Moved Permanently");
-  header("Location: http://localhost/master/practices/practice07/board.php");
+  header("Location: practices/practice07/board.php");
   exit();
 }
 
@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && isset($_POST[
   if ($statement->rowCount() > 0) {
     $_SESSION["id"] = $_POST["id"];
     header("HTTP/1.1 301 Moved Permanently");
-    header("Location: http://localhost/master/practices/practice07/board.php");
+    header("Location: practices/practice07/board.php");
     exit();
   } else {
     $hasError = true;
@@ -34,17 +34,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && isset($_POST[
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>CSS 画像掲示板 -ログイン-</title>
-  
+
   <style type="text/css">
     body {
     width: 600px;
       margin: 0px auto;
     }
-    
+
     #header {
-    
+
     }
-    
+
     #title {
       font-size: 18pt;
       margin: 10px 10px 5px;
@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && isset($_POST[
       background-repeat: no-repeat;
       background-size: 25px 25px;
     }
-    
+
     #main {
       margin: 10px 0px 10px;
       padding-top: 30px;
@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && isset($_POST[
       border-top: 1px solid #808080;
       border-bottom: 1px solid #808080;
     }
-    
+
     #footer {
       padding: 0px 10px;
     }

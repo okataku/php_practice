@@ -32,7 +32,7 @@ session_start();
 
 if (!isset($_SESSION[&quot;id&quot;]) || $_SESSION[&quot;id&quot;] == null) {
   header(&quot;HTTP/1.1 301 Moved Permanently&quot;);
-  header(&quot;Location: http://localhost/master/practices/practice07/login.php&quot;);
+  header(&quot;Location: practices/practice07/login.php&quot;);
 }
 
 if ($_SERVER[&quot;REQUEST_METHOD&quot;] == &quot;GET&quot;) {
@@ -215,7 +215,7 @@ session_start();
 
 if (!isset($_SESSION[&quot;id&quot;]) || strlen($_SESSION[&quot;id&quot;]) == 0) {
   header(&quot;HTTP/1.1 301 Moved Permanently&quot;);
-  header(&quot;Location: http://localhost/master/practices/practice07/login.php&quot;);
+  header(&quot;Location: practices/practice07/login.php&quot;);
 } else {
   $userId = $_SESSION[&quot;id&quot;];
 }
@@ -231,7 +231,7 @@ if ($_SERVER[&quot;REQUEST_METHOD&quot;] == &quot;GET&quot; &amp;&amp; isset($_G
     $createAt = $row[&quot;create_at&quot;];
   } else {
     header(&quot;HTTP/1.1 301 Moved Permanently&quot;);
-    header(&quot;Location: http://localhost/master/practices/practice08/board.php&quot;);
+    header(&quot;Location: practices/practice08/board.php&quot;);
   }
 } else if ($_SERVER[&quot;REQUEST_METHOD&quot;] == &quot;POST&quot;) {
   if (isset($_POST[&quot;entryId&quot;]) &amp;&amp; isset($_POST[&quot;comment&quot;])) {
@@ -245,14 +245,14 @@ if ($_SERVER[&quot;REQUEST_METHOD&quot;] == &quot;GET&quot; &amp;&amp; isset($_G
       $error = &quot;コメントを登録できませんでした。&quot;;
     } else {
       header(&quot;HTTP/1.1 301 Moved Permanently&quot;);
-      header(&quot;Location: http://localhost/master/practices/practice08/board.php&quot;); 
+      header(&quot;Location: practices/practice08/board.php&quot;); 
     }
   } else {
     $error = &quot;コメントを登録できませんでした。&quot;;
   }
 } else {
   header(&quot;HTTP/1.1 301 Moved Permanently&quot;);
-  header(&quot;Location: http://localhost/master/practices/practice08/board.php&quot;);
+  header(&quot;Location: practices/practice08/board.php&quot;);
 }
 
 ?&gt;
