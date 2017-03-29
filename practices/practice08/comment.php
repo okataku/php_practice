@@ -33,7 +33,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && strlen($_GET["i
     $statement->bindValue("p2", $userId, PDO::PARAM_STR);
     $statement->bindValue("p3", nl2br(htmlspecialchars($_POST["comment"])), PDO::PARAM_STR);
     $statement->execute();
-    exit();
     if ($statement->rowCount() < 1) {
       $error = "コメントを登録できませんでした。";
     } else {
