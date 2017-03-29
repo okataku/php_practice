@@ -1,0 +1,457 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>演習課題７ -サンプルコード-</title>
+    <style tyle="text/css">
+      h2 {
+      border-left: 10px solid #2E9AFE;
+      padding-left: 5px;
+      }
+      
+      pre {
+      border: 1px dashed #2E9AFE;
+      padding: 20px;
+      width: 900px;
+      max-height: 600px;
+      overflow: auto;
+      background-color:
+      #2E2E2E;
+      color: #fff
+      }
+    </style>
+  </head>
+  <body>
+    <h2>login.php</h2>
+    <pre>
+&lt;?php
+session_start();
+$hasError = false;
+
+// セッションに関連付いたユーザーであるとき掲示板ページへリダイレクトします。
+if (isset($_SESSION[&quot;id&quot;]) &amp;&amp; $_SESSION[&quot;id&quot;] != null) {
+  header(&quot;HTTP/1.1 301 Moved Permanently&quot;);
+  header(&quot;Location: http://cp9h7pt-anh-app000.c4sa.net/practices/practice07/board.php&quot;);
+  exit();
+}
+
+// ログイン処理を行います。
+// ログインが成功したとき掲示板ページへリダイレクトします。
+if ($_SERVER[&quot;REQUEST_METHOD&quot;] == &quot;POST&quot; &amp;&amp; isset($_POST[&quot;id&quot;]) &amp;&amp; isset($_POST[&quot;password&quot;])) {
+  $pdo = new PDO(&quot;mysql:host=xxxx;dbname=xxxx;&quot;, &quot;xxxx&quot;, &quot;xxxx&quot;, array(PDO::MYSQL_ATTR_INIT_COMMAND =&gt; &quot;SET CHARACTER SET `utf8`&quot;));
+  $statement = $pdo-&gt;prepare(&quot;select id from users where id = :id and password=md5(:password)&quot;);
+  $statement-&gt;bindValue(&quot;id&quot;, $_POST[&quot;id&quot;], PDO::PARAM_STR);
+  $statement-&gt;bindValue(&quot;password&quot;, $_POST[&quot;password&quot;], PDO::PARAM_STR);
+  $statement-&gt;execute();
+  if ($statement-&gt;rowCount() &gt; 0) {
+    $_SESSION[&quot;id&quot;] = $_POST[&quot;id&quot;];
+    header(&quot;HTTP/1.1 301 Moved Permanently&quot;);
+    header(&quot;Location: http://cp9h7pt-anh-app000.c4sa.net/practices/practice07/board.php&quot;);
+    exit();
+  } else {
+    $hasError = true;
+  }
+}
+
+?&gt;
+
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+  &lt;title&gt;CSS 画像掲示板 -ログイン-&lt;/title&gt;
+  
+  &lt;style type=&quot;text/css&quot;&gt;
+    body {
+    width: 600px;
+      margin: 0px auto;
+    }
+    
+    #header {
+    
+    }
+    
+    #title {
+      font-size: 18pt;
+      margin: 10px 10px 5px;
+      padding-left: 35px;
+      background-image: url(&quot;../../images/logo.gif&quot;);
+      background-repeat: no-repeat;
+      background-size: 25px 25px;
+    }
+    
+    #main {
+      margin: 10px 0px 10px;
+      padding-top: 30px;
+      padding-bottom: 30px;
+      padding-left: 50px;
+      border-top: 1px solid #808080;
+      border-bottom: 1px solid #808080;
+    }
+    
+    #footer {
+      padding: 0px 10px;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id=&quot;header&quot;&gt;
+    &lt;div id=&quot;title&quot;&gt;画像掲示板 -ログイン-&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div id=&quot;main&quot;&gt;
+    &lt;form action=&quot;./login.php&quot; method=&quot;post&quot;&gt;
+      &lt;table&gt;
+        &lt;tbody&gt;
+          &lt;?php
+          if ($hasError) {
+            print &quot;&lt;tr&gt;&quot;;
+            print &quot;&lt;td colspan=\&quot;2\&quot; style=\&quot;color: red \&quot;&gt;ログインできませんでした。&lt;/td&gt;&quot;;
+            print &quot;&lt;/tr&gt;&quot;;
+          }
+          ?&gt;
+          &lt;tr&gt;
+            &lt;td&gt;&lt;span&gt;ユーザー名&lt;/span&gt;&lt;/td&gt;
+            &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;id&quot; /&gt;&lt;br /&gt;
+            &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td&gt;&lt;span&gt;パスワード&lt;/span&gt;&lt;/td&gt;
+            &lt;td&gt;&lt;input type=&quot;password&quot; name=&quot;password&quot; /&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td colspan=&quot;2&quot; align=&quot;right&quot;&gt;&lt;input type=&quot;submit&quot; value=&quot;ログイン&quot; /&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+  &lt;div id=&quot;footer&quot;&gt;
+    &lt;div style=&quot;width: 350px; margin: 0px auto; font-size: 9pt; color: #808080;&quot;&gt;Copyright © 2013 Central Soft Service Co.,Ltd. All rights reserved.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+	</pre>
+    
+    <h2>logout.php</h2>
+    <pre>
+&lt;?php
+session_start();
+if (isset($_SESSION[&quot;id&quot;]) &amp;&amp; strlen($_SESSION[&quot;id&quot;]) &gt; 0) {
+  session_destroy();
+  $_SESSION = array();
+  setcookie(&quot;PHPSESSID&quot;, &quot;&quot;, time() - 3600 * 24);
+}
+header(&quot;HTTP/1.1 301 Moved Permanently&quot;);
+header(&quot;Location: http://cp9h7pt-anh-app000.c4sa.net/practices/practice07/login.php&quot;);
+exit();
+?&gt;
+	</pre>
+    
+    <h2>upload.php</h2>
+    <pre>
+&lt;?php
+$error = &quot;&quot;;
+$id = &quot;&quot;;
+$message = &quot;&quot;;
+$dir = &quot;./images/&quot;;
+$ext = &quot;&quot;;
+
+session_start();
+
+// セッションの状態を確認します。
+if (!isset($_SESSION[&quot;id&quot;]) || $_SESSION[&quot;id&quot;] == null) {
+  header(&quot;HTTP/1.1 301 Moved Permanently&quot;);
+  header(&quot;Location: http://cp9h7pt-anh-app000.c4sa.net/practices/practice07/login.php&quot;);
+} else {
+ $id = $_SESSION[&quot;id&quot;]; 
+}
+
+// このブロックがアップロード処理です。
+if ($_SERVER[&quot;REQUEST_METHOD&quot;] == &quot;POST&quot;) {
+  try {
+        
+    if (strlen($error) == 0 &amp;&amp; !isset($_FILES[&quot;image&quot;])) {
+      $error = &quot;画像ファイルを指定してください。&quot;;
+    }
+    
+    if (strlen($error) == 0 &amp;&amp; preg_match(&quot;/^image\/(jpg|jpeg|png|gif)$/i&quot;, $_FILES[&quot;image&quot;][&quot;type&quot;], $matches)) {
+      $errror = &quot;JPEG、GIF、PNG以外のファイル形式はアップロードできません。&quot;; 
+    }
+    if ($matches != null) {
+      $ext = &quot;.&quot;.strtolower($matches[1]);
+      if ($ext == &quot;.jpeg&quot;) $ext = &quot;.jpg&quot;;
+    }
+    
+    if (strlen($error) == 0 &amp;&amp; $_FILES[&quot;image&quot;][&quot;size&quot;] == 0) {
+      $error = &quot;画像ファイルのサイズが0バイトです。&quot;;
+    }
+    
+    if (strlen($error) == 0 &amp;&amp; $_FILES[&quot;image&quot;][&quot;size&quot;] &gt; 1024 * 1024) {
+      $error = &quot;1Mバイトを超える画像ファイルはアップロードできません。&quot;;
+    }
+    
+    if (strlen($error) == 0 &amp;&amp; $_FILES[&quot;image&quot;][&quot;error&quot;] != UPLOAD_ERR_OK) {
+      $error = &quot;アップロードが失敗しました。&quot;; 
+    }
+    
+    if (strlen($error) == 0) {
+      if (isset($_POST[&quot;message&quot;]) &amp;&amp; strlen($_POST[&quot;message&quot;]) &gt; 0) {
+       	$message = nl2br(htmlspecialchars($_POST[&quot;message&quot;]));
+      }
+      
+      sleep(1);
+      $dt = date(&quot;YmdHis&quot;, time());
+      $image = $dt.$ext;
+      $imagePath = $dir.$image;
+      $thumbnail = &quot;thumb_&quot;.$dt.$ext;
+      $thumbnailPath = $dir.$thumbnail;
+      rename($_FILES[&quot;image&quot;][&quot;tmp_name&quot;], $imagePath);
+      
+      // サムネイルを作成します。
+      $length = 200;
+      list($w, $h) = getimagesize($imagePath);
+      if ($w &gt; $length || $h &gt; $length) {
+        if ($w &gt;= $h) {
+          $nw = $length;
+          $nh = $h * $length / $w;
+        } else {
+          $nh = $length;
+          $nw = $w * $length / $h;
+        }
+        $src = imagecreatefromstring(file_get_contents($imagePath));
+        $dst = imagecreatetruecolor($nw, $nh);
+        imagecopyresized($dst, $src, 0, 0, 0, 0, $nw, $nh, $w, $h);
+        if ($ext == &quot;.jpg&quot;) imagejpeg($dst, $thumbnailPath);
+        else if ($ext == &quot;.png&quot;) imagepng($dst, $thumbnailPath);
+		else if ($ext == &quot;.gif&quot;) imagegif($dst, $thumbnailPath);
+          
+      } else {
+        copy($imagePath, $thumbnailPath);
+      }
+      
+      // データベースに登録します。
+      $pdo = new PDO(&quot;mysql:host=xxx.xxx.xxx.xxx;dbname=xxxx;&quot;, &quot;xxxx&quot;, &quot;xxxx&quot;, array(PDO::MYSQL_ATTR_INIT_COMMAND =&gt; &quot;SET CHARACTER SET `utf8`&quot;));
+      $commandText = &quot;insert into entries (user_id, message, image, thumbnail, create_at) values (:p1, :p2, :p3, :p4, NOW())&quot;;
+      $statement = $pdo-&gt;prepare($commandText);
+      $statement-&gt;bindValue(&quot;p1&quot;, $id, PDO::PARAM_STR);
+      $statement-&gt;bindValue(&quot;p2&quot;, $message, PDO::PARAM_STR);
+      $statement-&gt;bindValue(&quot;p3&quot;, $image, PDO::PARAM_STR);
+      $statement-&gt;bindValue(&quot;p4&quot;, $thumbnail, PDO::PARAM_STR);
+      $statement-&gt;execute();
+    }
+  }
+  catch (Exception $ex) {
+    var_dump($ex);
+    $error = &quot;予期せぬエラーが発生しました。&quot;;
+  }
+}
+
+?&gt;
+
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+  &lt;title&gt;CSS 画像掲示板 -画像アップロード-&lt;/title&gt;
+
+  &lt;style type=&quot;text/css&quot;&gt;
+    body {
+      width: 600px;
+      margin: 0px auto;
+    }
+    
+    #header {
+    
+    }
+    
+    #title {
+    font-size: 18pt;
+      margin: 10px 10px 5px;
+      padding-left: 35px;
+    background-image: url(&quot;../../images/logo.gif&quot;);
+      background-repeat: no-repeat;
+      background-size: 25px 25px;
+    }
+    
+    #menu {
+        margin: 0px 5px;
+    }
+    
+    #main {
+      margin: 10px 0px 10px;
+      padding-top: 30px;
+      padding-bottom: 30px;
+      padding-left: 50px;
+      border-top: 1px solid #808080;
+      border-bottom: 1px solid #808080;
+    }
+    
+    #footer {
+      padding: 0px 10x;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id=&quot;header&quot;&gt;
+      &lt;div id=&quot;title&quot;&gt;画像掲示板 -アップロード-&lt;/div&gt;
+      &lt;div id=&quot;menu&quot;&gt;
+        &lt;input type=&quot;button&quot; onClick=&quot;location.href = './logout.php'&quot; value=&quot;ログアウト&quot; /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div id=&quot;main&quot;&gt;
+      &lt;form action=&quot;./upload.php&quot; method=&quot;POST&quot; enctype=&quot;multipart/form-data&quot;&gt;
+        &lt;table&gt;
+          &lt;tbody&gt;
+            &lt;?php
+			if (strlen($error) &gt; 0) {
+            	printf(&quot;&lt;tr&gt;&lt;td colspan=\&quot;2\&quot; style=\&quot;color:red\&quot;&gt;%s&lt;/td&gt;&lt;/tr&gt;&quot;, $error);
+            }              
+            ?&gt;
+            &lt;tr&gt;
+              &lt;td&gt;ファイル&lt;/td&gt;
+              &lt;td&gt;&lt;input type=&quot;file&quot; name=&quot;image&quot; /&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+              &lt;td style=&quot;vertical-align: top&quot;&gt;メッセージ&lt;/td&gt;
+              &lt;td&gt;&lt;textarea cols=&quot;50&quot; rows=&quot;5&quot; name=&quot;message&quot;&gt;&lt;/textarea&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+              &lt;td&gt;&lt;/td&gt;
+              &lt;td&gt;
+                &lt;input type=&quot;submit&quot; value=&quot;アップロード&quot; /&gt;
+                &lt;input type=&quot;button&quot; onClick=&quot;location.href='./board.php'&quot; value=&quot;戻る&quot; /&gt;
+              &lt;/td&gt;
+            &lt;/tr&gt;
+          &lt;/tbody&gt;
+        &lt;/table&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+    &lt;div id=&quot;footer&quot;&gt;
+      &lt;div style=&quot;width: 350px; margin: 0px auto; font-size: 9pt; color: #808080;&quot;&gt;Copyright © 2013 Central Soft Service Co.,Ltd. All rights reserved.&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+	</pre>
+    
+    <h2>board.php</h2>
+    <pre>
+&lt;?php
+session_start();
+
+if (!isset($_SESSION[&quot;id&quot;]) || $_SESSION[&quot;id&quot;] == null) {
+  header(&quot;HTTP/1.1 301 Moved Permanently&quot;);
+  header(&quot;Location: http://cp9h7pt-anh-app000.c4sa.net/practices/practice07/login.php&quot;);
+}
+
+?&gt;
+
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+  &lt;title&gt;CSS 画像掲示板&lt;/title&gt;
+
+  &lt;style type=&quot;text/css&quot;&gt;
+    body {
+    position: relative;
+    margin: 0px auto;
+    padding: 75px 0px 50px;
+    width: 600px;
+    }
+    
+    #header {
+    position: fixed;
+    top: 0px;
+    height: 70px;
+    width: inherit;
+    background-color: #fff;
+    border-bottom: 1px solid #808080;
+    }
+    
+    #title {
+    font-size: 20pt;
+    margin: 10px 10px 5px;
+    padding-left: 35px;
+    background-image: url(&quot;../../images/logo.gif&quot;);
+    background-repeat: no-repeat;
+    background-size: 25px 25px;
+    }
+    
+    #menu {
+    margin: 0px 5px;
+    }
+    
+    #main {
+    
+    }
+    
+    #footer {
+    position: fixed;
+    bottom: 0px;
+    border-top: 1px solid #808080;
+    background-color: #fff;
+    height: 50px;
+    width: inherit;
+    }
+    
+    .entry {
+    padding: 10px 10px;
+    border-bottom: 1px dashed #808080;
+    width: 580px;
+    }
+    
+    .entry .info {
+    margin-bottom: 5px;
+    }
+    
+    .entry .user {
+    
+    }
+    
+    .entry .createAt {
+    margin-left: 10px;
+    }
+    
+    .entry .message {
+    margin-bottom: 5px;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id=&quot;header&quot;&gt;
+    &lt;div id=&quot;title&quot;&gt;画像掲示板&lt;/div&gt;
+    &lt;div id=&quot;menu&quot;&gt;
+      &lt;input type=&quot;button&quot; onClick=&quot;location.href='./logout.php'&quot; value=&quot;ログアウト&quot; /&gt;
+      &lt;input type=&quot;button&quot; onClick=&quot;location.href='./upload.php'&quot; value=&quot;アップロード&quot; /&gt;
+      &lt;input type=&quot;button&quot; onClick=&quot;location.href='../practice08/board.php'&quot; value=&quot;機能強化版へ(演習８)&quot; /&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div id=&quot;main&quot;&gt;
+    
+    &lt;?php
+	$pdo = new PDO(&quot;mysql:host=xxx.xxx.xxx.xxx;dbname=xxxx;&quot;, &quot;xxxx&quot;, &quot;xxxx&quot;, array(PDO::MYSQL_ATTR_INIT_COMMAND =&gt; &quot;SET CHARACTER SET `utf8`&quot;));
+	$statement = $pdo-&gt;prepare(&quot;
+    SELECT t1.id, t1.user_id, t2.name, t1.message, t1.image, t1.thumbnail, DATE_FORMAT( t1.create_at,  '%Y年%m月%d日 %k時%i分%s秒' ) AS  `createAt` 
+	FROM entries AS t1 LEFT OUTER JOIN users AS t2 ON t1.user_id = t2.id
+	ORDER BY t1.create_at DESC &quot;);
+	$statement-&gt;execute();
+    while($row = $statement-&gt;fetch(PDO::FETCH_ASSOC)) {
+    ?&gt;
+    &lt;div class=&quot;entry&quot;&gt;
+      &lt;div class=&quot;info&quot;&gt;&lt;span class=&quot;user&quot;&gt;&lt;?php print $row[&quot;name&quot;] ?&gt;&lt;/span&gt;&lt;span class=&quot;createAt&quot;&gt;&lt;?php print $row[&quot;createAt&quot;] ?&gt;&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;message&quot;&gt;&lt;?php print $row[&quot;message&quot;] ?&gt;&lt;/div&gt;
+      &lt;div class=&quot;thumbnail&quot;&gt;&lt;a target=&quot;_blank&quot; href=&quot;./images/&lt;?php print $row[&quot;image&quot;] ?&gt;&quot;&gt;&lt;img src=&quot;./images/&lt;?php print $row[&quot;thumbnail&quot;] ?&gt;&quot; /&gt;&lt;/a&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;?php
+    }
+	?&gt;
+  &lt;/div&gt;
+  
+  &lt;div id=&quot;footer&quot;&gt;
+    &lt;div style=&quot;width: 350px; margin:10px auto 0px; font-size: 9pt; color: #808080;&quot;&gt;Copyright © 2013 Central Soft Service Co.,Ltd. All rights reserved.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+	</pre>
+  </body>
+</html>

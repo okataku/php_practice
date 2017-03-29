@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>演習課題１ -サンプルコード-</title>
+    <style tyle="text/css">
+      h2 {
+      border-left: 10px solid #2E9AFE;
+      padding-left: 5px;
+      }
+      
+      pre {
+      border: 1px dashed #2E9AFE;
+      padding: 20px;
+      width: 900px;
+      overflow: auto;
+      background-color:
+      #2E2E2E;
+      color: #fff
+      }
+    </style>
+  </head>
+  <body>
+    <h2>input.html</h2>
+	<pre>
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+    &lt;title&gt;演習課題１&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;form action=&quot;./output.php&quot; method=&quot;GET&quot;&gt;
+      &lt;div style=&quot;font-weight:bold; margin:5px 0px; padding:10px 5px; width:300px; border-bottom:1px dashed #808080;&quot;&gt;
+        誕生日を入力してください。
+      &lt;/div&gt;
+      &lt;input type=&quot;text&quot; size=&quot;2&quot; maxlength=&quot;2&quot; name=&quot;month&quot; /&gt;&nbsp;月&nbsp;
+      &lt;input type=&quot;text&quot; size=&quot;2&quot; maxlength=&quot;2&quot; name=&quot;day&quot; /&gt;&nbsp;日&nbsp;
+      &lt;input type=&quot;submit&quot; value=&quot;送信&quot; /&gt;
+    &lt;/form&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+    </pre>
+    
+    <h2>output.html</h2>
+    <pre>
+&lt;?php
+$date = null;
+$starSign = &quot;&quot;;
+$error = &quot;&quot;;
+
+if ($_SERVER[&quot;REQUEST_METHOD&quot;] == &quot;GET&quot; &&
+    isset($_GET[&quot;month&quot;]) && isset($_GET[&quot;day&quot;]) &&
+    is_numeric($_GET[&quot;month&quot;]) && is_numeric($_GET[&quot;day&quot;])) {
+  
+  $m = (int)$_GET[&quot;month&quot;];
+  $d = (int)$_GET[&quot;day&quot;];
+  
+  if (!checkdate($m, $d, 2000)) {
+    $error = &quot;日付の値が正しくありません。&quot;;
+    
+  } else {
+    
+    $date = strtotime(&quot;2000/&quot;.$m.&quot;/&quot;.$d.&quot; 00:00:00&quot;);
+    if (strtotime(&quot;2000/01/21 00:00:00&quot;) &lt;= $date && $date &lt;= strtotime(&quot;2000/02/20 00:00:00&quot;)) {
+      $starSign = &quot;水瓶座&quot;;
+    } else if ($date &lt;= strtotime(&quot;2000/03/20 00:00:00&quot;)) {
+      $starSign = &quot;魚座&quot;;
+    } else if ($date &lt;= strtotime(&quot;2000/04/20 00:00:00&quot;)) {
+      $starSign = &quot;牡羊座&quot;;
+    } else if ($date &lt;= strtotime(&quot;2000/05/20 00:00:00&quot;)) {
+      $starSign = &quot;牡牛座&quot;;
+    } else if ($date &lt;= strtotime(&quot;2000/06/20 00:00:00&quot;)) {
+      $starSign = &quot;双子座&quot;;
+    } else if ($date &lt;= strtotime(&quot;2000/07/20 00:00:00&quot;)) {
+      $starSign = &quot;蟹座&quot;;
+    } else if ($date &lt;= strtotime(&quot;2000/08/20 00:00:00&quot;)) {
+      $starSign = &quot;獅子座&quot;;
+    } else if ($date &lt;= strtotime(&quot;2000/09/20 00:00:00&quot;)) {
+      $starSign = &quot;乙女座&quot;;
+    } else if ($date &lt;= strtotime(&quot;2000/10/20 00:00:00&quot;)) {
+      $starSign = &quot;天秤座&quot;;
+    } else if ($date &lt;= strtotime(&quot;2000/11/20 00:00:00&quot;)) {
+      $starSign = &quot;蠍座&quot;;
+    } else if ($date &lt;= strtotime(&quot;2000/12/20 00:00:00&quot;)) {
+      $starSign = &quot;射手座&quot;;
+    } else {
+      $starSign = &quot;山羊座&quot;;
+    }
+  }
+} else {
+  header(&quot;HTTP/1.1 301 Moved Permanently&quot;);
+  header(&quot;Location: http://cp9h7pt-anh-app000.c4sa.net/practices/practice01/input.html&quot;);
+}
+?&gt;
+
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+    &lt;title&gt;演習課題１&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;?php
+    if (strlen($error) == 0) {
+      print &quot;&lt;div&gt;あなたは&quot;.$starSign.&quot;です。&lt;/div&gt;&quot;;
+    } else {
+      print &quot;&lt;div style=\&quot;color: red;\&quot;&gt;&quot;.$error.&quot;&lt;/div&gt;&quot;;
+    }
+  ?&gt;
+    &lt;a href=&quot;./input.html&quot;&gt;戻る&lt;/a&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+	</pre>
+  </body>
+</html>

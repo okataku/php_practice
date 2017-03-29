@@ -1,0 +1,478 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>演習課題４ -サンプルコード-</title>
+    <style tyle="text/css">
+      h2 {
+      border-left: 10px solid #2E9AFE;
+      padding-left: 5px;
+      }
+      
+      pre {
+      border: 1px dashed #2E9AFE;
+      padding: 20px;
+      width: 900px;
+      max-height: 600px;
+      overflow: auto;
+      background-color:
+      #2E2E2E;
+      color: #fff
+      }
+    </style>
+  </head>
+  <body>
+    <h2>select.php</h2>
+    <pre>
+&lt;?php
+$pdo = new PDO(&quot;mysql:host=255.255.255.255;dbname=YourDbName;&quot;, &quot;user&quot;, &quot;passwd&quot;, array(PDO::MYSQL_ATTR_INIT_COMMAND =&gt; &quot;SET CHARACTER SET `utf8`&quot;));
+$statement = $pdo-&gt;prepare(&quot;select * from human&quot;);
+$statement-&gt;execute();
+?&gt;
+
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+    &lt;title&gt;演習課題４ -レコード一覧-&lt;/title&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+      table {
+      	margin: 5px;
+      	border-spacing: 0;
+      }
+      
+      thead td {
+      	color: #FFF;
+      	background-color: #3C3C3C;
+      	border-bottom: 1px dashed #808080;
+      	padding: 3px;
+      }
+      
+      tbody td {
+      	border-bottom: 1px dashed #808080;
+      	padding: 3px 10px;
+      }
+    &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div style=&quot;font-weight:bold; margin:5px 0px; padding:10px 5px; width:300px; border-bottom:1px dashed #808080;&quot;&gt;humanテーブルのレコード一覧&lt;/div&gt;
+    &lt;div&gt;
+    &lt;?php
+    if ($statement-&gt;rowCount() == 0) {
+      print &quot;レコードが登録されていません。&quot;;
+    } else {
+      print &quot;&lt;table&gt;&quot;;
+      print &quot;&lt;thead&gt;&lt;tr&gt;&quot;;
+      print &quot;&lt;td&gt;氏名&lt;/td&gt;&quot;;
+      print &quot;&lt;td&gt;性別&lt;/td&gt;&quot;;
+      print &quot;&lt;td&gt;生年月日&lt;/td&gt;&quot;;
+      print &quot;&lt;td&gt;身長&lt;/td&gt;&quot;;
+      print &quot;&lt;td&gt;体重&lt;/td&gt;&quot;;
+      print &quot;&lt;td&gt;編集&lt;/td&gt;&quot;;
+      print &quot;&lt;td&gt;削除&lt;/td&gt;&quot;;
+      print &quot;&lt;/tr&gt;&lt;/thead&gt;&quot;;
+      print &quot;&lt;tbody&gt;&quot;;
+      while ($row = $statement-&gt;fetch(PDO::FETCH_ASSOC)) {
+      	print &quot;&lt;tr&gt;&quot;;
+        print &quot;&lt;td&gt;&quot;.$row[&quot;name&quot;].&quot;&lt;/td&gt;&quot;;
+        print &quot;&lt;td&gt;&quot;.($row[&quot;sex&quot;] == 0 ? &quot;男性&quot; : &quot;女性&quot;).&quot;&lt;/td&gt;&quot;;
+        print &quot;&lt;td&gt;&quot;.$row[&quot;birthday&quot;].&quot;&lt;/td&gt;&quot;;
+        print &quot;&lt;td&gt;&quot;.$row[&quot;height&quot;].&quot;&lt;/td&gt;&quot;;
+        print &quot;&lt;td&gt;&quot;.$row[&quot;weight&quot;].&quot;&lt;/td&gt;&quot;;
+        print &quot;&lt;td&gt;&lt;a href=\&quot;./update.php?id=&quot;.$row[&quot;id&quot;].&quot;\&quot;&gt;編集&lt;/a&gt;&lt;/td&gt;&quot;;
+        print &quot;&lt;td&gt;&lt;a href=\&quot;./delete.php?id=&quot;.$row[&quot;id&quot;].&quot;\&quot;&gt;削除&lt;/a&gt;&lt;/td&gt;&quot;;
+        print &quot;&lt;/tr&gt;&quot;;
+      }
+      print &quot;&lt;/tbody&gt;&lt;/table&gt;&quot;;
+    }
+	?&gt;  
+    &lt;/div&gt;
+    &lt;br/&gt;
+    &lt;div&gt;
+      &lt;a href=&quot;./insert.php&quot;&gt;レコードを追加する&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+	</pre>
+    
+    <h2>insert.php</h2>
+    <pre>
+&lt;?php
+$message = &quot;&quot;;
+$error=&quot;&quot;;
+$name = &quot;&quot;;
+$sex = 0;
+$year = &quot;&quot;;
+$month = &quot;&quot;;
+$day = &quot;&quot;;
+$height = &quot;&quot;;
+$weight = &quot;&quot;;
+
+if ($_SERVER[&quot;REQUEST_METHOD&quot;] == &quot;POST&quot;) {
+  if (isset($_POST[&quot;name&quot;])) $name = $_POST[&quot;name&quot;];
+  if (isset($_POST[&quot;sex&quot;])) $sex = $_POST[&quot;sex&quot;];
+  if (isset($_POST[&quot;year&quot;])) $year = $_POST[&quot;year&quot;];
+  if (isset($_POST[&quot;month&quot;])) $month = $_POST[&quot;month&quot;];
+  if (isset($_POST[&quot;day&quot;])) $day = $_POST[&quot;day&quot;];
+  if (isset($_POST[&quot;height&quot;])) $height = $_POST[&quot;height&quot;];
+  if (isset($_POST[&quot;weight&quot;])) $weight = $_POST[&quot;weight&quot;];
+    
+  if (strlen($error) == 0 &amp;&amp; strlen($name) == 0) {
+    $error = &quot;名前を入力してください。&quot;;
+  }
+  
+  if (strlen($error) == 0 &amp;&amp; strlen($sex) == 0) {
+    $error = &quot;性別を入力してください。&quot;;
+  }
+  
+  if (strlen($error) == 0 &amp;&amp; strlen($year) == 0) {
+    $error = &quot;生年月日の年を入力してください。&quot;;
+  }
+  
+  if (strlen($error) == 0 &amp;&amp; strlen($month) == 0) {
+    $error = &quot;生年月日の月を入力してください。&quot;;
+  }
+  
+  if (strlen($error) == 0 &amp;&amp; strlen($day) == 0) {
+    $error = &quot;生年月日の日を入力してください。&quot;;
+  }
+  
+  if (strlen($error) == 0 &amp;&amp; strlen($height) == 0) {
+    $error = &quot;身長を入力してください。&quot;;
+  }
+  
+  if (strlen($error) == 0 &amp;&amp; strlen($weight) == 0) {
+    $error = &quot;体重を入力してください。&quot;;
+  }
+  
+  if (strlen($error) == 0 &amp;&amp; !preg_match(&quot;/^\d+$/&quot;, $year)) {
+    $error = &quot;生年月日の年は整数を入力してください。&quot;;
+  }
+  
+  if (strlen($error) == 0 &amp;&amp; !preg_match(&quot;/^\d+$/&quot;, $month)) {
+    $error = &quot;生年月日の月は整数を入力してください。&quot;;
+  }
+  
+  if (strlen($error) == 0 &amp;&amp; !preg_match(&quot;/^\d+$/&quot;, $day)) {
+    $error = &quot;生年月日の日は整数を入力してください。&quot;;
+  }
+  
+  if (strlen($error) == 0 &amp;&amp; !checkdate($month, $day, $year)) {
+    $error = &quot;生年月日に正しい日付を入力してください。&quot;;
+  }
+  
+  if (strlen($error) == 0 &amp;&amp; !is_numeric($height)) {
+    $error = &quot;身長は数値を入力してください。&quot;;
+  }
+  
+  if (strlen($error) == 0 &amp;&amp; !is_numeric($weight)) {
+    $error = &quot;体重は数値を入力してください。&quot;;
+  }
+    
+  if (strlen($error) == 0) {
+    try {
+      $pdo = new PDO(&quot;mysql:host=255.255.255.255;dbname=YourDbName;&quot;, &quot;user&quot;, &quot;passwd&quot;, array(PDO::MYSQL_ATTR_INIT_COMMAND =&gt; &quot;SET CHARACTER SET `utf8`&quot;));
+      $statement = $pdo-&gt;prepare(&quot;insert into human (name, sex, birthday, height, weight) values (:name, :sex, :birthday, :height, :weight)&quot;);
+      $statement-&gt;bindValue(&quot;name&quot;, $name, PDO::PARAM_STR);
+      $statement-&gt;bindValue(&quot;sex&quot;, $sex, PDO::PARAM_INT);
+      $statement-&gt;bindValue(&quot;birthday&quot;, date(&quot;Y/m/d&quot;, strtotime($year.&quot;/&quot;.$month.&quot;/&quot;.$day)), PDO::PARAM_STR);
+      $statement-&gt;bindValue(&quot;height&quot;, $height, PDO::PARAM_STR);
+      $statement-&gt;bindValue(&quot;weight&quot;, $weight, PDO::PARAM_STR);
+      $statement-&gt;execute();
+      $message = sprintf(&quot;ID=%sでレコードを新規登録しました。&quot;, $pdo-&gt;lastInsertId());
+      $name = &quot;&quot;;
+      $sex = 0;
+      $year = &quot;&quot;;
+      $month = &quot;&quot;;
+      $day = &quot;&quot;;
+      $height = &quot;&quot;;
+      $weight = &quot;&quot;;
+    } catch (Exception $ex) {
+      $error = &quot;レコードの登録が失敗しました。&quot;;
+    }
+  }
+}
+?&gt;
+
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+    &lt;title&gt;演習課題４ -新規レコード登録-&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div style=&quot;font-weight:bold; margin:5px 0px; padding:10px 5px; width:300px; border-bottom:1px dashed #808080;&quot;&gt;humanテーブルへ新規レコードを登録&lt;/div&gt;
+    &lt;div&gt;
+      &lt;form action=&quot;./insert.php&quot; method=&quot;POST&quot;&gt;
+        &lt;table&gt;
+          &lt;tbody&gt;
+            &lt;?php
+			if (strlen($message) &gt; 0) {
+              printf(&quot;&lt;tr&gt;&lt;td style=\&quot;color: blue;\&quot; colspan=\&quot;2\&quot;&gt;%s&lt;/td&gt;&lt;/tr&gt;&quot;, $message);
+            }
+            if (strlen($error) &gt; 0) {
+              printf(&quot;&lt;tr&gt;&lt;td style=\&quot;color: red;\&quot; colspan=\&quot;2\&quot;&gt;%s&lt;/td&gt;&lt;/tr&gt;&quot;, $error);
+            }
+			?&gt;
+            &lt;tr&gt;
+              &lt;td&gt;氏名&lt;/td&gt;
+              &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;name&quot;  value=&quot;&lt;?php print $name ?&gt;&quot; /&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+              &lt;td&gt;性別&lt;/td&gt;
+              &lt;td&gt;
+                &lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;0&quot; &lt;?php if ($sex == 0) { print &quot;checked&quot;; } ?&gt;/&gt;男性&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;
+                &lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;1&quot; &lt;?php if ($sex == 1) { print &quot;checked&quot;; } ?&gt;/&gt;女性
+              &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+              &lt;td&gt;生年月日&lt;/td&gt;
+              &lt;td&gt;
+                &lt;input type=&quot;text&quot; name=&quot;year&quot; maxlength=&quot;4&quot; size=&quot;2&quot; value=&quot;&lt;?php print $year ?&gt;&quot; /&gt;&amp;nbsp;年&amp;nbsp;
+                &lt;input type=&quot;text&quot; name=&quot;month&quot; maxlength=&quot;2&quot; size=&quot;1&quot; value=&quot;&lt;?php print $month ?&gt;&quot; /&gt;&amp;nbsp;月&amp;nbsp;
+                &lt;input type=&quot;text&quot; name=&quot;day&quot; maxlength=&quot;2&quot; size=&quot;1&quot;  value=&quot;&lt;?php print $day ?&gt;&quot; /&gt;&amp;nbsp;日&amp;nbsp;
+              &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+              &lt;td&gt;身長&lt;/td&gt;
+              &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;height&quot; size=&quot;4&quot;  value=&quot;&lt;?php print $height ?&gt;&quot; /&gt;&amp;nbsp;cm&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+              &lt;td&gt;体重&lt;/td&gt;
+              &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;weight&quot; size=&quot;4&quot;  value=&quot;&lt;?php print $weight ?&gt;&quot; /&gt;&amp;nbsp;kg&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+              &lt;td&gt;&lt;/td&gt;
+              &lt;td&gt;&lt;input type=&quot;submit&quot; value=&quot;登録&quot; /&gt;&lt;a href=&quot;./select.php&quot;&gt;&amp;nbsp;&amp;nbsp;戻る&lt;/a&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+          &lt;/tbody&gt;
+        &lt;/table&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+	</pre>
+    
+    <h2>update.php</h2>
+    <pre>
+&lt;?php
+$message = &quot;&quot;;
+$error = &quot;&quot;;
+$id = &quot;&quot;;
+$name = &quot;&quot;;
+$sex = &quot;&quot;;
+$year = &quot;&quot;;
+$month = &quot;&quot;;
+$day = &quot;&quot;;
+$height = &quot;&quot;;
+$weight = &quot;&quot;;
+
+if ($_SERVER[&quot;REQUEST_METHOD&quot;] == &quot;GET&quot; && isset($_GET[&quot;id&quot;]) && strlen($_GET[&quot;id&quot;]) &gt; 0) {
+  try {
+    $pdo = new PDO(&quot;mysql:host=255.255.255.255;dbname=YourDbName;&quot;, &quot;user&quot;, &quot;passwd&quot;, array(PDO::MYSQL_ATTR_INIT_COMMAND =&gt; &quot;SET CHARACTER SET `utf8`&quot;));
+    $statement = $pdo-&gt;prepare(&quot;select * from human where id = :id&quot;);
+    $statement-&gt;bindValue(&quot;id&quot;, $_GET[&quot;id&quot;], PDO::PARAM_INT);
+    $statement-&gt;execute();
+    if ($row = $statement-&gt;fetch(PDO::FETCH_ASSOC)) {
+      $id = $row[&quot;id&quot;];
+      $name = $row[&quot;name&quot;];
+      $sex = $row[&quot;sex&quot;];
+      $birthday = strtotime($row[&quot;birthday&quot;]);
+      $year = date(&quot;Y&quot;, $birthday);
+      $month = date(&quot;n&quot;, $birthday);
+      $day = date(&quot;j&quot;, $birthday);
+      $height = $row[&quot;height&quot;];
+      $weight = $row[&quot;weight&quot;];
+    } else {
+      $error = &quot;レコードが見つかりませんでした。&quot;;
+    }
+  } catch (Exception $ex) {
+    $error = &quot;編集対象のレコード取得処理が失敗しました。&quot;;
+    var_dump($ex);
+  }
+} else if ($_SERVER[&quot;REQUEST_METHOD&quot;] == &quot;POST&quot;) {
+  if (isset($_POST[&quot;id&quot;])) $id = $_POST[&quot;id&quot;];
+  if (isset($_POST[&quot;name&quot;])) $name = $_POST[&quot;name&quot;];
+  if (isset($_POST[&quot;sex&quot;])) $sex = $_POST[&quot;sex&quot;];
+  if (isset($_POST[&quot;year&quot;])) $year = $_POST[&quot;year&quot;];
+  if (isset($_POST[&quot;month&quot;])) $month = $_POST[&quot;month&quot;];
+  if (isset($_POST[&quot;day&quot;])) $day = $_POST[&quot;day&quot;];
+  if (isset($_POST[&quot;height&quot;])) $height = $_POST[&quot;height&quot;];
+  if (isset($_POST[&quot;weight&quot;])) $weight = $_POST[&quot;weight&quot;];
+  
+  if (strlen($error) == 0 && strlen($id) == 0) {
+    $error = &quot;IDが指定されていません。&quot;;
+  }
+  
+  if (strlen($error) == 0 && strlen($name) == 0) {
+    $error = &quot;名前を入力してください。&quot;;
+  }
+  
+  if (strlen($error) == 0 && strlen($sex) == 0) {
+    $error = &quot;性別を入力してください。&quot;;
+  }
+  
+  if (strlen($error) == 0 && strlen($year) == 0) {
+    $error = &quot;生年月日の年を入力してください。&quot;;
+  }
+  
+  if (strlen($error) == 0 && strlen($month) == 0) {
+    $error = &quot;生年月日の月を入力してください。&quot;;
+  }
+  
+  if (strlen($error) == 0 && strlen($day) == 0) {
+    $error = &quot;生年月日の日を入力してください。&quot;;
+  }
+  
+  if (strlen($error) == 0 && strlen($height) == 0) {
+    $error = &quot;身長を入力してください。&quot;;
+  }
+  
+  if (strlen($error) == 0 && strlen($weight) == 0) {
+    $error = &quot;体重を入力してください。&quot;;
+  }
+  
+  if (strlen($error) == 0 && !preg_match(&quot;/^\d+$/&quot;, $year)) {
+    $error = &quot;生年月日の年は整数を入力してください。&quot;;
+  }
+  
+  if (strlen($error) == 0 && !preg_match(&quot;/^\d+$/&quot;, $month)) {
+    $error = &quot;生年月日の月は整数を入力してください。&quot;;
+  }
+  
+  if (strlen($error) == 0 && !preg_match(&quot;/^\d+$/&quot;, $day)) {
+    $error = &quot;生年月日の日は整数を入力してください。&quot;;
+  }
+  
+  if (strlen($error) == 0 && !checkdate($month, $day, $year)) {
+    $error = &quot;生年月日に正しい日付を入力してください。&quot;;
+  }
+  
+  if (strlen($error) == 0 && !is_numeric($height)) {
+    $error = &quot;身長は数値を入力してください。&quot;;
+  }
+  
+  if (strlen($error) == 0 && !is_numeric($weight)) {
+    $error = &quot;体重は数値を入力してください。&quot;;
+  }
+  
+  try {
+    if (strlen($error) == 0) {
+      $pdo = new PDO(&quot;mysql:host=175.184.33.60;dbname=cp9h7pt_ate;&quot;, &quot;cp9h7pt_ate&quot;, &quot;GKC5aKnI&quot;, array(PDO::MYSQL_ATTR_INIT_COMMAND =&gt; &quot;SET CHARACTER SET `utf8`&quot;));
+      $statement = $pdo-&gt;prepare(&quot;update human set name=:name, sex=:sex, birthday=:birthday, height=:height, weight=:weight where id = :id&quot;);
+      $statement-&gt;bindValue(&quot;id&quot;, $id, PDO::PARAM_INT);
+      $statement-&gt;bindValue(&quot;name&quot;, $name, PDO::PARAM_STR);
+      $statement-&gt;bindValue(&quot;sex&quot;, $sex, PDO::PARAM_INT);
+      $statement-&gt;bindValue(&quot;birthday&quot;, date(&quot;Y/m/d&quot;, strtotime($year.&quot;/&quot;.$month.&quot;/&quot;.$day)), PDO::PARAM_STR);
+      $statement-&gt;bindValue(&quot;height&quot;, $height, PDO::PARAM_STR);
+      $statement-&gt;bindValue(&quot;weight&quot;, $weight, PDO::PARAM_STR);
+      $statement-&gt;execute();
+      $message = sprintf(&quot;id=&amp;sのレコードを更新しました。&quot;, $id);
+    }
+  } catch (Exception $ex) {
+    $error = &quot;更新処理が失敗しました。&quot;;
+  }
+} else {
+  header(&quot;HTTP/1.1 301 Moved Permanently&quot;);
+  header(&quot;Location: http://cp9h7pt-anh-app000.c4sa.net/practices/practice04/select.php&quot;);
+}
+
+?&gt;
+
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+    &lt;title&gt;演習課題４ -レコード編集-&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div style=&quot;font-weight:bold; margin:5px 0px; padding:10px 5px; width:300px; border-bottom:1px dashed #808080;&quot;&gt;humanテーブルのレコード削除&lt;/div&gt;
+    &lt;form action=&quot;./update.php&quot; method=&quot;POST&quot;&gt;
+      &lt;input type=&quot;hidden&quot; name=&quot;id&quot; value=&quot;&lt;?php print $id ?&gt;&quot; /&gt;
+      &lt;table&gt;
+        &lt;tbody&gt;
+          &lt;?php
+  			if (strlen($message) &gt; 0) {
+  				printf (&quot;&lt;tr&gt;&lt;td style=\&quot;color: blue;\&quot; colspan=\&quot;2\&quot;&gt;&amp;s&lt;/td&gt;&lt;/tr&gt;&quot;, $message);
+          	}
+            if (strlen($error) &gt; 0) {
+  				printf (&quot;&lt;tr&gt;&lt;td style=\&quot;color: red;\&quot; colspan=\&quot;2\&quot;&gt;&amp;s&lt;/td&gt;&lt;/tr&gt;&quot;, $error);
+          	}
+          ?&gt;
+          &lt;tr&gt;
+            &lt;td&gt;氏名&lt;/td&gt;
+            &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;name&quot;  value=&quot;&lt;?php print $name ?&gt;&quot; /&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td&gt;性別&lt;/td&gt;
+            &lt;td&gt;
+              &lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;0&quot; &lt;?php if ($sex == 0) { print &quot;checked&quot;; } ?&gt;/&gt;男性&nbsp;&nbsp;&nbsp;&nbsp;
+              &lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;1&quot; &lt;?php if ($sex == 1) { print &quot;checked&quot;; } ?&gt;/&gt;女性
+            &lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td&gt;生年月日&lt;/td&gt;
+            &lt;td&gt;
+              &lt;input type=&quot;text&quot; name=&quot;year&quot; maxlength=&quot;4&quot; size=&quot;2&quot; value=&quot;&lt;?php print $year ?&gt;&quot; /&gt;&nbsp;年&nbsp;
+              &lt;input type=&quot;text&quot; name=&quot;month&quot; maxlength=&quot;2&quot; size=&quot;1&quot; value=&quot;&lt;?php print $month ?&gt;&quot; /&gt;&nbsp;月&nbsp;
+              &lt;input type=&quot;text&quot; name=&quot;day&quot; maxlength=&quot;2&quot; size=&quot;1&quot;  value=&quot;&lt;?php print $day ?&gt;&quot; /&gt;&nbsp;日&nbsp;
+            &lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td&gt;身長&lt;/td&gt;
+            &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;height&quot; size=&quot;4&quot;  value=&quot;&lt;?php print $height ?&gt;&quot; /&gt;&nbsp;cm&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td&gt;体重&lt;/td&gt;
+            &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;weight&quot; size=&quot;4&quot;  value=&quot;&lt;?php print $weight ?&gt;&quot; /&gt;&nbsp;kg&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td&gt;&lt;/td&gt;
+            &lt;td&gt;&lt;input type=&quot;submit&quot; value=&quot;登録&quot; /&gt;&lt;a href=&quot;./select.php&quot;&gt;&nbsp;&nbsp;戻る&lt;/a&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;/form&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+	</pre>
+    
+    <h2>delete.php</h2>
+    <pre>
+&lt;?php
+$message = &quot;&quot;;
+$id = -9999;
+
+if ($_SERVER[&quot;REQUEST_METHOD&quot;] == &quot;GET&quot; &amp;&amp; isset($_GET[&quot;id&quot;]) &amp;&amp; strlen($_GET[&quot;id&quot;])) {
+  try {
+    $pdo = new PDO(&quot;mysql:host=175.184.33.60;dbname=cp9h7pt_ate;&quot;, &quot;cp9h7pt_ate&quot;, &quot;GKC5aKnI&quot;, array(PDO::MYSQL_ATTR_INIT_COMMAND =&gt; &quot;SET CHARACTER SET `utf8`&quot;));
+    $statement = $pdo-&gt;prepare(&quot;delete from human where id = :id&quot;);
+    $statement-&gt;bindValue(&quot;id&quot;, $_GET[&quot;id&quot;], PDO::PARAM_INT);
+    $statement-&gt;execute();
+    $message = sprintf(&quot;id=%sのレコードを削除しました。&quot;, $_GET[&quot;id&quot;]);
+  } catch(Exception $ex) {
+   	$message = &quot;削除処理が失敗しました。&quot;;
+  }
+} else {
+  $message = &quot;削除対象が指定されませんでした。&quot;;
+}
+
+?&gt;
+
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+    &lt;title&gt;演習課題４ -レコード削除-&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;  
+    &lt;div style=&quot;font-weight:bold; margin:5px 0px; padding:10px 5px; width:300px; border-bottom:1px dashed #808080;&quot;&gt;humanテーブルのレコード削除&lt;/div&gt;
+    &lt;div&gt;
+      	&lt;br/&gt;&lt;?php print $message ?&gt;
+    	&lt;br/&gt;&lt;br/&gt;&lt;a href=&quot;./select.php&quot;&gt;戻る&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+	</pre>
+  </body>
+</html>

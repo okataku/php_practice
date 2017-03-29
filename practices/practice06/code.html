@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>演習課題６ -サンプルコード-</title>
+    <style tyle="text/css">
+      h2 {
+      border-left: 10px solid #2E9AFE;
+      padding-left: 5px;
+      }
+      
+      pre {
+      border: 1px dashed #2E9AFE;
+      padding: 20px;
+      width: 900px;
+      max-height: 600px;
+      overflow: auto;
+      background-color:
+      #2E2E2E;
+      color: #fff
+      }
+    </style>
+  </head>
+  <body>
+    <h2>session.php</h2>
+    <pre>
+&lt;?php
+$error = &quot;&quot;;
+$name = &quot;&quot;;
+$log = array();
+
+session_start();
+if ($_SERVER[&quot;REQUEST_METHOD&quot;] == &quot;POST&quot;) {
+  if (isset($_POST[&quot;function&quot;]) &amp;&amp; $_POST[&quot;function&quot;] == &quot;1&quot;) {
+    if (isset($_POST[&quot;name&quot;]) &amp;&amp; strlen($_POST[&quot;name&quot;]) &gt; 0) {
+      $_SESSION[&quot;name&quot;] = $_POST[&quot;name&quot;];
+      $_SESSION[&quot;log&quot;] = array(date(&quot;Y年m月d日 H時i分s秒&quot;));
+      $name = $_SESSION[&quot;name&quot;];
+      $log = $_SESSION[&quot;log&quot;];
+    } else {
+      $error = &quot;名前を入力してください。&quot;;
+    }
+  } else if (isset($_POST[&quot;function&quot;]) &amp;&amp; $_POST[&quot;function&quot;] == &quot;2&quot;) {
+    session_destroy();
+    $_SESSION = array();
+    setcookie(&quot;PHPSESSID&quot;, &quot;&quot;, time() - 3600 * 24 * 7);
+  }
+} else if (isset($_SESSION[&quot;name&quot;]) &amp;&amp; strlen($_SESSION[&quot;name&quot;]) &gt; 0 &amp;&amp; isset($_SESSION[&quot;log&quot;])) {
+  $name = $_SESSION[&quot;name&quot;];
+  $log = $_SESSION[&quot;log&quot;];
+  if (count($log) &gt;= 5) {
+    array_shift($log);
+  }
+  array_push($log, date(&quot;Y年m月d日 H時i分s秒&quot;));
+  $_SESSION[&quot;log&quot;] = $log;
+}
+?&gt;
+
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+    &lt;title&gt;演習課題６&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div style=&quot;font-weight:bold; margin:5px 0px; padding:10px 5px; width:300px; border-bottom:1px dashed #808080;&quot;&gt;演習課題６&lt;/div&gt;
+    &lt;?php
+    if (strlen($error) &gt; 0) {
+      printf(&quot;&lt;div style=\&quot;color:red\&quot;&gt;%s&lt;/div&gt;&quot;, $error);
+    }
+    if (is_array($log) &amp;&amp; count($log) &gt; 0) {
+      printf (&quot;&lt;div style=\&quot;\&quot;&gt;ようこそ%sさん。&lt;/div&gt;&quot;, $name);
+    }
+	?&gt;
+    &lt;table&gt;
+      &lt;tbody&gt;
+        &lt;?php
+        if (is_array($log) &amp;&amp; count($log) &gt; 0) {
+          foreach(array_reverse($log) as $l) {
+            printf(&quot;&lt;tr&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;&quot;, $l);
+          }
+        ?&gt;
+        &lt;form action=&quot;./session.php&quot; method=&quot;POST&quot;&gt;
+          &lt;input type=&quot;hidden&quot; name=&quot;function&quot; value=&quot;2&quot; /&gt;
+          &lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;input type=&quot;submit&quot; value=&quot;セッション終了&quot; /&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;/form&gt;
+        &lt;?php } else { ?&gt;
+        &lt;form action=&quot;./session.php&quot; method=&quot;POST&quot;&gt;
+          &lt;input type=&quot;hidden&quot; name=&quot;function&quot; value=&quot;1&quot; /&gt;
+          &lt;tr&gt;&lt;td&gt;名前&lt;/td&gt;&lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;name&quot; /&gt;&lt;/td&gt;&lt;/tr&gt;
+          &lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;input type=&quot;submit&quot; value=&quot;セッション開始&quot; /&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;/form&gt;
+        &lt;?php } ?&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+    &lt;a href=&quot;./session.php&quot;&gt;ページを更新する&lt;/a&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+	</pre>
+  </body>
+</html>

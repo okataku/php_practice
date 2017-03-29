@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>演習課題１ -サンプルコード-</title>
+    <style tyle="text/css">
+      h2 {
+      border-left: 10px solid #2E9AFE;
+      padding-left: 5px;
+      }
+      pre {
+      border: 1px dashed #2E9AFE;
+      padding: 20px;
+      width: 900px;
+      overflow: auto;
+      background-color:
+      #2E2E2E;
+      color: #fff
+      }
+    </style>
+  </head>
+  <body>
+    <h2>bmi.php</h2>
+    <pre>
+&lt;?php
+$stdBmi = 22;
+$height = 0;
+$weight = 0;
+$bmi = 0;
+$stdWeight = 0;
+$result = &quot;&quot;;
+
+if ($_SERVER[&quot;REQUEST_METHOD&quot;] == &quot;POST&quot; &&
+    isset($_POST[&quot;height&quot;]) && isset($_POST[&quot;weight&quot;]) &&
+    is_numeric($_POST[&quot;height&quot;]) && is_numeric($_POST[&quot;weight&quot;])) {
+  
+  $height = (float)$_POST[&quot;height&quot;];
+  $weight = (float)$_POST[&quot;weight&quot;];
+  
+  $bmi = round($weight / pow(($height / 100), 2), 2);
+  $stdWeight = round(pow(($height / 100), 2) * $stdBmi, 2);
+  
+  if ($bmi &lt; 18.5) { $result = &quot;痩せ&quot;; }
+  else if ($bmi &gt;= 30) { $result = &quot;高度肥満&quot;; }
+  else if ($bmi &gt;= 25) { $result = &quot;肥満&quot;; }
+  else { $result = &quot;標準&quot;; }
+  
+} else {
+  
+  $height = &quot;&quot;;
+  $weight = &quot;&quot;;
+  $bmi = &quot;&quot;;
+  $stdWeight = &quot;&quot;;
+}
+?&gt;
+
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+    &lt;title&gt;演習課題２&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div style=&quot;font-weight:bold; margin:5px 0px; padding:10px 5px; width:300px; border-bottom:1px dashed #808080;&quot;&gt;BMIチェッカー&lt;/div&gt;
+    &lt;form action=&quot;./bmi.php&quot; method=&quot;POST&quot;&gt;
+      &lt;table&gt;
+        &lt;tbody&gt;
+          &lt;tr&gt;
+            &lt;td&gt;身長&lt;/td&gt;
+            &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;height&quot; value=&quot;&lt;?php print $height ?&gt;&quot; /&gt;&nbsp;cm&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td&gt;体重&lt;/td&gt;
+            &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;weight&quot; value=&quot;&lt;?php print $weight ?&gt;&quot; /&gt;&nbsp;kg&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td&gt;判定&lt;/td&gt;
+            &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;result&quot; disabled=&quot;disabled&quot; value=&quot;&lt;?php print $result ?&gt;&quot; /&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td&gt;BMI値&lt;/td&gt;
+            &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;bmi&quot; disabled=&quot;disabled&quot; value=&quot;&lt;?php print $bmi ?&gt;&quot; /&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td&gt;標準体重&lt;/td&gt;
+            &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;stdWight&quot; disabled=&quot;disabled&quot; value=&quot;&lt;?php print $stdWeight ?&gt;&quot;/&gt;&nbsp;kg&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td&gt;&lt;/td&gt;
+            &lt;td&gt;&lt;input type=&quot;submit&quot; value=&quot;計算実行&quot; /&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;/form&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+	</pre>
+  </body>
+</html>

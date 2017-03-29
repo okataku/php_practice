@@ -1,0 +1,783 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>2014年度入社 内定者向けプログラミング演習課題</title>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+      $(function() {
+      
+      	// メニュー項目にClickイベントハンドラを設定する。
+      	$("ul#menu > li.menuItem").each(function(index) {
+      		$(this).click(function() {
+      			var id = $(this).attr("contentsId");
+      			$(this).siblings().removeClass("menuItemSelected").addClass("menuItemUnselected");
+      			$(this).removeClass("menuItemUnselected").addClass("menuItemSelected");
+      			$("div.contentsItemSelected").removeClass("contentsItemSelected").addClass("contentsItemUnselected");
+      			$("div.contentsItem[contentsId=" + id + "]").removeClass("contentsItemUnselected").addClass("contentsItemSelected");
+      		});
+		});
+      });
+    </script>
+    
+    <style type="text/css">
+      body {
+      	color: #464646;
+      	font-size: 10pt;
+      	margin: 10px auto;
+      	width: 800px;
+      }
+      
+      #header {
+      	font-size: 18pt;
+      	margin-bottom: 10px;
+      	padding: 20px 0px 20px 40px;
+      	background-image: url("./images/logo.gif");
+      	background-repeat: no-repeat;
+      	background-size: 28px 28px;
+      	background-position: 5px 17px;
+      	border-bottom: 1px solid #808080;
+      }
+      
+      #navigation {
+      	float: left;
+      	margin-bottom: 10px;
+      	width: 170px;
+      }
+      
+      #menu {
+      	list-style-type: none;
+      	margin: 5px;
+      	padding: 0px;
+      }
+      
+      .menuItem {
+      	margin: 10px;
+      	padding-left: 5px;
+      	font-size: 11pt;
+      	border-left: 5px solid #808080;
+      }
+            
+      .menuItemSelected {
+      	color: #38ACEC;
+      	font-weight: bold;
+      	border-left: 5px solid #38ACEC;
+      	cursor: pointer;
+      }
+      
+      .menuItemUnselected:hover {
+      	color: #38ACEC;
+      	border-left: 5px solid #38ACEC;
+      	cursor: pointer;
+      }
+      
+      .menuItemUnselected:active {
+      	color: #2B65EC;
+      	border-left: 5px solid #2B65EC;
+      	cursor: pointer;
+      }
+      
+      #mainContents {
+      	float: left;
+      	margin-bottom: 10px;
+      	padding: 5px 5px 5px 20px;
+      	width: 600px;
+      	min-height: 600px;
+      	border-left: 1px dashed #808080;
+      }
+      
+      .menuItemLink {
+      	margin: 10px;
+      	padding-left: 5px;
+      	border-left: 5px solid #808080;
+      }
+      
+      .menuItemLink a {
+      	color: #464646;
+      	font-size: 11pt;
+      	text-decoration: none;
+      }
+      
+      .menuItemLink:hover {
+      	border-left: 5px solid #38ACEC;
+      }
+      
+      .menuItemLink a:hover {
+      	color: #38ACEC;
+      	font-size: 11pt;
+      	cursor: pointer;
+      	text-decoration: none;
+      }
+      
+      .contentsItem {
+
+      }
+      
+      .contentsItemSelected {
+      	display: block;
+      }
+      
+      .contentsItemUnselected {
+      	display: none;
+      }
+      
+      .contentsHeaderLv1 {
+      	font-weight: bold;
+      	font-size: 12pt;
+      	margin-bottom: 15px;
+      	padding: 10px;
+      	background-color: #F5F5F5;
+      }
+      
+      .contentsHeaderLv2 {
+      	font-weight: bold;
+      	margin: 20px 5px 10px;
+      	padding: 5px;
+      	border-left: 5px solid #38ACEC;
+      	border-bottom: 1px solid #808080;
+      }
+      
+      .contentsBodyLv2 {
+      	margin: 5px 20px;
+      	padding: 0px;
+      }
+      
+      .contentsBodyLv2 ul {
+      	list-style-type: disk;
+      	margin: 3px 20px;
+      	padding: 0px 10px;
+      }
+      
+      .contentsBodyLv2 table {
+      	font-size: 9pt;
+      	margin: 5px;
+      	border-spacing: 0;
+      }
+      
+      .contentsBodyLv2 thead td {
+      	color: #FFF;
+      	background-color: #3C3C3C;
+      	border-bottom: 1px dashed #808080;
+      	padding: 4px 8px;
+      }
+      
+      .contentsBodyLv2 tbody td {
+      	border-bottom: 1px dashed #808080;
+      	padding: 4px 8px;
+      }
+      
+      .contentsBodyLv2 .detail {
+      	margin: 5px 20px;
+      	padding: 5px;
+      	background-color: #F5F5F5;
+      	border: 1px dashed #38ACEC;
+      }
+      
+      .contentsHeaderLv3 {
+      	font-weight: bold;
+      	text-decoration: underline;
+      	padding: 15px 15px 5px;
+      }
+      
+      .contentsBodyLv3 {
+      	padding: 15px;
+      	padding: 0px 15px;
+      }
+            
+      #footer {
+      	clear: left;
+      	padding: 10px 20px;
+      	border-top: 1px solid #808080;
+      	color: #808080;
+      	font-size: 9pt;
+      	text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="header">2014年度入社 内定者向けプログラミング演習課題</div>
+    <div id="navigation">
+      <ul id="menu">
+        <li class="menuItem menuItemSelected" contentsId="1">はじめに</li>
+        <li class="menuItem menuItemUnselected" contentsId="2">C4SAについて</li>
+        <li class="menuItem menuItemUnselected" contentsId="4">演習課題１</li>
+        <li class="menuItem menuItemUnselected" contentsId="5">演習課題２</li>
+        <li class="menuItem menuItemUnselected" contentsId="6">演習課題３</li>
+        <li class="menuItem menuItemUnselected" contentsId="7">演習課題４</li>
+        <li class="menuItem menuItemUnselected" contentsId="8">演習課題５</li>
+        <li class="menuItem menuItemUnselected" contentsId="9">演習課題６</li>
+        <li class="menuItem menuItemUnselected" contentsId="10">演習課題７</li>
+        <li class="menuItem menuItemUnselected" contentsId="11">演習課題８</li>
+        <li class="menuItemLink"><a target="_blank" href="http://localhost/ogiso/index.php/">小木曽さんのホーム</a></li>
+        <li class="menuItemLink"><a target="_blank" href="http://localhost/matsui/index.php/">松井さんのホーム</a></li>
+      </ul>
+    </div>
+    <div id="mainContents">
+      <div class="contentsItem contentsItemSelected" contentsId="1">
+        <div class="contentsHeaderLv1">はじめに</div>
+        <div class="contentsHeaderLv2">目的</div>
+        <div class="contentsBodyLv2">
+          本Webページが提供するプログラミング演習課題を通じてプログラミングの基本的な知識を身に付けます。
+          また、<a target="_blank" href="https://www.salesforce.com/jp/chatter/overview/">「Salesforce Chatter」</a>上での、
+          内定者とCSS社内エンジニアとの間でQ&amp;A等のやりとりを通じてコミュニケーションを深めます。
+        </div>
+        <div class="contentsHeaderLv2">参考資料</div>
+        <div class="contentsBodyLv2">
+          基礎からのPHP&nbsp;&nbsp;&nbsp;&nbsp;西沢夢路
+        </div>
+        <div class="contentsHeaderLv2">スケジュール</div>
+        <div class="contentsBodyLv2">
+          演習課題１～８を以下のスケジュールで行います。<br/>
+          各段階において個人の進捗状況に合わせてスケジュールを調整していきます。<br/>
+          <br/>
+          <table>
+            <thead>
+              <tr><td>期間</td><td>課題</td><td>補足</td></tr>
+            </thead>
+            <tbody>
+              <tr><td>2013年10月</td><td>演習課題１～２</td><td>レポート提出(期限は月末)</td></tr>
+              <tr><td>2013年11月</td><td>演習課題３～４</td><td>レポート提出(期限は月末)</td></tr>
+              <tr><td>2013年12月</td><td>演習課題５～６</td><td>レポート提出(期限は月末)</td></tr>
+              <tr><td>2014年1月</td><td>演習課題７</td><td>レポート提出(期限は月末)</td></tr>
+              <tr><td>2014年2月</td><td>演習課題８</td><td>レポート提出(期限は月末)</td></tr>
+            </tbody>
+          </table>
+          
+          
+        </div>
+        <div class="contentsHeaderLv2">レポートについて</div>
+        <div class="contentsBodyLv2">
+          レポートはCSSで用意した<a href="./downloads/report_template.xls">報告書テンプレート(EXCEL形式)</a>を使用してください。<br/>
+          レポートはChatterに提出してください。<br/>
+        </div>
+        <div class="contentsHeaderLv2">演習の進め方</div>
+        <div class="contentsBodyLv2">
+          <div class="contentBodyLv2">演習はC4SA・Github・Salesforce Chatterを利用して行います。</div><br/>
+          <div class="contentsHeaderLv3">C4SA</div>
+          <div class="contentsBodyLv3">
+            <a target="_blank" href="https://ui.c4sa.nifty.com/accounts/sign_in">C4SA</a>上でプログラムの実装、実行、動作確認を行います。<br/>
+            作成したソースコード等をGithubへプッシュします。<br/>
+            詳しい説明は「C4SAについて」を参考にしてください。
+          </div>
+          <div class="contentsHeaderLv3">Github</div>
+          <div class="contentsBodyLv3">
+            ソースコードの変更履歴を管理します。<br/>
+            「<a target="_blank" href="https://github.com/">issues</a>」機能を利用してフォーローアップ担当者からの指摘事項を通知します。内定者の方は通知されたissueを確認して各自で対応してください。<br/>
+          </div>
+          <div class="contentsHeaderLv3">Salesforce Chatter</div>
+          <div class="contentsBodyLv3">
+            内定者とCSS社内エンジニアのコミュニケーションの場です。質問や相談、報告等は
+            <a target="_blank" href="https://www.salesforce.com/jp/chatter/overview/">Chatter</a>
+            にアップロードしてください。            
+          </div>
+        </div>
+      </div>
+      
+      <div class="contentsItem contentsItemUnselected" contentsId="2">
+        <div class="contentsHeaderLv1">C4SAについて</div>
+        演習はすべて<a href="https://ui.c4sa.nifty.com/accounts/sign_in">C4SA</a>上で行ってください。<br/>
+        <div class="contentsHeaderLv2">開発環境</div>   
+        <div class="contentsBodyLv2">
+          <ul>
+            <li>PHP 5.4.5</li>
+            <li>MySQL 5.5.18</li>
+            <li>phpMyAdmin 4.0.1</li>
+          </ul>
+        </div>
+        <div class="contentsHeaderLv2">概要</div>
+        <div class="contentsBodyLv2">
+          演習課題で実装するすべてのプログラムは、C4SA上で動作させます。<br/>
+          この演習で主に使用する機能は「ファイル」、「CLI」、「共有MySQL」です。<br/><br/>
+          <a target="_blank" href="./images/c4sa-1.jpg"><img src="./images/c4sa-1.jpg" width="457" height="268" /></a>
+        </div>
+        <div class="contentsHeaderLv2">ソースコードの編集方法</div>
+        <div class="contentsBodyLv2">
+          「ファイル」ウィンドウにて任意のフォルダおよびファイルの追加、編集、削除を行うことができます。<br/><br/>
+          <div class="contentsHeaderLv3">ファイルの操作</div>
+          <div class="contentsBodyLv3">
+          	<a target="_blank" href="./images/c4sa-2.jpg"><img src="./images/c4sa-2.jpg" width="457" height="268" /></a>
+          </div>
+          <div class="contentsHeaderLv3">フォルダの操作</div>
+          <div class="contentsBodyLv3">
+          	<a target="_blank" href="./images/c4sa-3.jpg"><img src="./images/c4sa-3.jpg" width="457" height="268" /></a>
+          </div>
+          <div class="contentsHeaderLv3">ディレクトリ構成</div>
+          <div class="contentsBodyLv3">
+          	<a target="_blank" href="./images/c4sa-7.jpg"><img src="./images/c4sa-7.jpg" width="325" height="371" /></a>
+          </div>
+        </div>
+        <div class="contentsHeaderLv2">phpMyAdminの利用方法</div>
+        <div class="contentsBodyLv2">
+          phpMyAdminは[共有MySQL] → [管理画面へ]で開くことができます。<br/>
+          phpMyAdminの詳しい説明は、参考資料「基礎からのPHP」を参考にしてください。<br/><br/>
+          <a target="_blank" href="./images/c4sa-4.jpg"><img src="./images/c4sa-4.jpg" width="166" height="167" /></a>
+        </div>
+        <div class="contentsHeaderLv2">Githubへのアップロード方法</div>
+        <div class="contentsBodyLv2">
+          ソースコードの変更やディレクトリへの変更の履歴を残すため、Githubへ定期的にアップロード(PUSH)してください。この操作は「CLI」を使用して行います。<br/>
+          以下にGithubへのアップロード手順を説明します。<br/>
+          <div class="contentsHeaderLv3">1. gitのディレクトリへ移動する。</div>
+          <div class="contentsBodyLv3">
+            <a target="_blank" href="./images/c4sa-5.jpg"><img src="./images/c4sa-5.jpg" width="473" height="123" /></a>
+            ローカルリポジトリがあるディレクトリに移動します。<br/>
+          </div>
+          <div class="contentsHeaderLv3">2. Add(git add .)</div>
+          <div class="contentsBodyLv3">
+            「git add .」コマンドを実行します。<br/>
+          </div>
+          <div class="contentsHeaderLv3">3. コミット(git commit -m "")</div>
+          <div class="contentsBodyLv3">
+            「git command -m」コマンドを実行します。<br/>
+          </div>
+          <div class="contentsHeaderLv3">4. プッシュ(git push)</div>
+          <div class="contentsBodyLv3">
+            「git push」コマンドを実行します。<br/>
+            <a target="_blank" href="./images/c4sa-6.jpg"><img src="./images/c4sa-6.jpg" width="473" height="123" /></a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="contentsItem contentsItemUnselected" contentsId="3">
+        <div class="contentsHeaderLv1">Githubの利用方法</div>
+        <div>準備中....</div>
+      </div>
+      
+      <div class="contentsItem contentsItemUnselected" contentsId="4">
+        <div class="contentsHeaderLv1">演習課題１</div>
+        <div class="contentsHeaderLv2">課題内容</div>
+        <div class="contentsBodyLv2">
+          GET送信を利用して、誕生日から星座を求めるプログラムをPHPで実装します。<br/>
+          <a target="_blank" href="http://localhost/master/practices/practice01/input.html">サンプル</a>
+          <a target="_blank" href="http://localhost/master/practices/practice01/code.html">サンプルコード</a>
+        </div>
+        <div class="contentsHeaderLv2">仕様</div>
+        <div class="contentsBodyLv2">
+          <div>誕生日の情報を送信するためのHTMLとその情報を受信して星座を求めるPHPの2つのファイルを作成します。</div>
+          <br/>
+          <div>＜送信側(入力)＞<br/>以下の項目を入力とします。</div>
+          <ul>
+            <li>誕生日の月</li>
+            <li>誕生日の日</li>
+          </ul>
+          <br/>
+          <div>＜受信側(出力)＞<br/>以下の項目を出力とします。</div>
+          <ul>
+            <li>入力値が日付として認識できない値の場合、その旨を通知するメッセージを表示する。</li>
+            <li>3月21日～4月20日のとき「牡羊座」</li>
+            <li>4月21日～5月20日のとき「牡牛座」</li>
+            <li>5月21日～6月20日のとき「双子座」</li>
+            <li>6月21日～7月20日のとき「蟹座」</li>
+            <li>7月21日～8月20日のとき「獅子座」</li>
+            <li>8月21日～9月20日のとき「乙女座」</li>
+            <li>9月21日～10月20日のとき「天秤座」</li>
+            <li>10月21日～11月20日のとき「蠍座」</li>
+            <li>11月21日～12月20日のとき「射手座」</li>
+            <li>12月21日～1月20日のとき「山羊座」</li>
+            <li>1月21日～2月20日のとき「水瓶座」</li>
+            <li>2月21日～3月20日のとき「魚座」</li>
+          </ul>
+        </div>
+        <div class="contentsHeaderLv2">参考</div>
+        <div class="contentsBodyLv2">
+          基礎からのPHP PART02 CHAPTER04 (P.41～P.43)<br/>
+          基礎からのPHP PART02 CHAPTER09
+        </div>
+        <div class="contentsHeaderLv2">キーワード</div>
+        <div class="contentsBodyLv2">
+          <ul>
+            <li>formタグ</li>
+            <li>GETメソッド</li>
+            <li>$_GET(スーパーグローバル変数)</li>
+            <li>型変換(キャスト)</li>
+            <li>is_numeric関数</li>
+            <li>checkdate関数</li>
+            <li>strtotime関数</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="contentsItem contentsItemUnselected" contentsId="5">
+        <div class="contentsHeaderLv1">演習課題２</div>
+        <div class="contentsHeaderLv2">課題内容</div>
+        <div class="contentsBodyLv2">
+          POST送信を利用して、BMI指数を計算するプログラムをPHPで実装します。<br/>
+          <a target="_blank" href="http://localhost/master/practices/practice02/bmi.php">サンプル</a>
+          <a target="_blank" href="http://localhost/master/practices/practice02/code.html">サンプルコード</a>
+        </div>
+        <div class="contentsHeaderLv2">仕様</div>
+        <div class="contentsBodyLv2">
+          <div>データを送信する側と受信する側の処理を1つのPHPファイルに記述します。</div>
+          <br/>
+          <div>＜入力値＞</div>
+          <ul>
+            <li>身長(cm)</li>
+            <li>体重(㎏)</li>
+          </ul>
+          <br/>
+          <div>＜出力値＞</div>
+          <ul>
+            <li>判定結果</li>
+            <li>BMI値</li>
+            <li>標準体重</li>
+          </ul>
+          <br/>
+          <div>＜BMI値の求め方＞</div>
+          <ul>
+            <li>BMI値 = 体重(kg) ÷ (身長(m) × 身長(m)) ※小数第三位を四捨五入</li>
+          </ul>
+          <br/>
+          <div>＜標準体重の求め方＞</div>
+          <ul>
+            <li>標準体重(kg) = (身長(m) × 身長(m)) ÷ 標準BMI値 ※小数第三位を四捨五入、標準BMI値は22とする</li>
+          </ul>
+          <br/>
+          <div>＜判定方法＞</div>
+          <ul>
+            <li>BMI値が18.5未満のとき「痩せ」</li>
+            <li>BMI値が18.5以上かつ25未満のとき「標準」</li>
+            <li>BMI値が25以上かつ30未満のとき「肥満」</li>
+            <li>BMI値が30以上のとき「高度肥満」</li>
+          </ul>
+        </div>
+        <div class="contentsHeaderLv2">参考</div>
+        <div class="contentsBodyLv2">
+          基礎からのPHP PART03 CHAPTER09
+        </div>
+        <div class="contentsHeaderLv2">キーワード</div>
+        <div class="contentsBodyLv2">
+          <ul>
+            <li>formタグ</li>
+            <li>POSTメソッド</li>
+            <li>$_POST(スーパーグローバル変数)</li>
+            <li>型変換(キャスト)</li>
+            <li>is_numeric関数</li>
+            <li>round関数</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="contentsItem contentsItemUnselected" contentsId="6">
+        <div class="contentsHeaderLv1">演習課題３</div>
+        <div class="contentsHeaderLv2">課題内容</div>
+        <div class="contentsBodyLv2">
+          MySQLデータベースにテーブルを作成し、レコードの登録、抽出、編集、削除を処理するクエリを作成します。<br/>
+          作成したクエリは本課題のディレクトリ(home/public_html/practices/practice03/)に保存してください。<br/><br/>
+          ＜作成するファイル＞
+          <ul>
+            <li>create.sql</li>
+            <li>insert.sql</li>
+            <li>select.sql</li>
+            <li>update.sql</li>
+            <li>delete.sql</li>
+          </ul>
+          <br/>
+          C4SAでphpMyAdminを利用するには、[キャンバス] → [共有MySQL] → [管理画面へ]を選択します。<br/><br/>
+          <a target="_blank" href="./images/phpMyAdmin.jpg"><img src="./images/phpMyAdmin.jpg" width="230" height="270" /></a><br/><br/><br/>
+          作成するテーブルの内容は次の通りです。テーブル名は「human」とします。
+          <table>
+            <thead>
+              <tr><td>論理列名</td><td>物理列名</td><td>データ型</td><td>データ長</td><td>NULL</td><td>PK</td><td>A_I</td><td>説明</td></tr>
+            </thead>
+            <tbody>
+              <tr><td>ID</td><td>id</td><td>INT</td><td></td><td></td><td>✓</td><td>✓</td><td>レコードのIDです。</td></tr>
+              <tr><td>氏名</td><td>name</td><td>VARCHAR</td><td>32</td><td></td><td></td><td></td><td>氏名です。</td></tr>
+              <tr><td>性別</td><td>sex</td><td>TYNYINT</td><td>1</td><td></td><td></td><td></td><td>性別です。0を男性、1を女性とします。</td></tr>
+              <tr><td>生年月日</td><td>birthday</td><td>DATE</td><td></td><td></td><td></td><td></td><td>生年月日です。</td></tr>
+              <tr><td>身長</td><td>height</td><td>DECIMAL</td><td>(4, 1)</td><td></td><td></td><td></td><td>身長です。</td></tr>
+              <tr><td>体重</td><td>weight</td><td>DECIMAL</td><td>(4, 1)</td><td></td><td></td><td></td><td>体重です。</td></tr>
+            </tbody>
+          </table>    
+        </div>
+        <div class="contentsHeaderLv2">参考</div>
+        <div class="contentsBodyLv2">
+          　※基礎からのPHP PART03 CHAPTER10-13
+        </div>
+        <div class="contentsHeaderLv2">キーワード</div>
+        <div class="contentsBodyLv2">
+          <ul>
+            <li>php MyAdmin</li>
+            <li>CREATE文</li>
+            <li>INSERT文</li>
+            <li>SELECT文</li>
+            <li>UPDATE文</li>
+            <li>DELETE文</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="contentsItem contentsItemUnselected" contentsId="7">
+        <div class="contentsHeaderLv1">演習課題４</div>
+        <div class="contentsHeaderLv2">課題内容</div>
+        <div class="contentsBodyLv2">
+          演習課題３で作成した「human」テーブルに対して、抽出／登録／編集／削除を処理するPHPプログラムを作成します。<br/>
+          <a target="_blank" href="./practices/practice04/select.php">サンプル</a>
+          <a target="_blank" href="./practices/practice04/code.html">サンプルコード</a>
+        </div>
+        <div class="contentsHeaderLv2">仕様</div>
+        <div class="contentsBodyLv2">
+          ＜抽出(select.php)＞<br/>
+          「human」テーブル内のすべてのレコードを一覧表示します。<br/><br/>
+          
+          ＜登録(insert.php)＞<br/>
+          「human」テーブルに新しいレコードを追加します。<br/><br/>
+          
+          ＜編集(update.php)＞<br/>
+          select.phpで表示する一覧から任意のレコードを選択し、そのレコードの内容を変更します。
+          <br/><br/>
+          
+          ＜削除(delete.php)＞<br/>
+          select.phpで表示する一覧から任意のレコードを選択し、そのレコードを削除します。
+          <br/><br/>
+          
+          ＜全体イメージ＞<br/>
+          <a target="_blank" href="./images/practice04-1.jpg"><img src="./images/practice04-1.jpg" /></a>
+        </div>
+        <div class="contentsHeaderLv2">参考</div>
+        <div class="contentsBodyLv2">
+          ※基礎からのPHP PART05 CHAPTER20(P.278-284)
+        </div>
+		<div class="contentsHeaderLv2">キーワード</div>
+        <div class="contentsBodyLv2">
+          <ul>
+            <li>PDOオブジェクト</li>
+            <li>プリぺアードステートメント</li>
+            <li>SQLインジェクション</li>
+          </ul>
+        </div>        
+      </div>
+      
+      <div class="contentsItem contentsItemUnselected" contentsId="8">
+        <div class="contentsHeaderLv1">演習課題５</div>
+        <div class="contentsHeaderLv2">課題内容</div>
+        <div class="contentsBodyLv2">
+          Cookieを利用したアクセスカウンタをPHPで実装します。<br/>
+          <a target="_blank" href="./practices/practice05/cookie.php">サンプル</a>
+          <a target="_blank" href="./practices/practice05/code.html">サンプルコード</a>
+        </div>
+        <div class="contentsHeaderLv2">仕様</div>
+        <div class="contentsBodyLv2">
+          ページにアクセスするたびに、アクセスカウンタをインクリメントして、そのアクセスが何回目かをブラウザに出力します。<br/>
+          また、カウンタのリセットとCookieの削除を処理するボタンを配置します。
+          リセットボタンをクリックした場合、カウンタを1に戻します。Cookieの削除ボタンをクリックした場合、Cookieを削除します。
+        </div>
+        <div class="contentsHeaderLv2">参考</div>
+        <div class="contentsBodyLv2">
+          　基礎からのPHP PART05 CHAPTER18
+        </div>
+        <div class="contentsHeaderLv2">キーワード</div>
+        <div class="contentsBodyLv2">
+          <ul>
+            <li>Cookie</li>
+            <li>$_COOKIE(スーパーグローバル変数)</li>
+            <li>GETメソッド</li>
+            <li>POSTメソッド</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="contentsItem contentsItemUnselected" contentsId="9">
+        <div class="contentsHeaderLv1">演習課題６</div>
+        <div class="contentsHeaderLv2">課題内容</div>
+        <div class="contentsBodyLv2">
+          セッションを利用して、ページにアクセスした人のアクセス履歴を表示するプログラムをPHPで実装します。<br/>
+          <a target="_blank" href="./practices/practice06/session.php">サンプル</a>
+          <a target="_blank" href="./practices/practice06/code.html">サンプルコード</a>
+        </div>
+        <div class="contentsHeaderLv2">仕様</div>
+        <div class="contentsBodyLv2">
+          <div class="contentsHeaderLv3">セッション開始前</div>
+          <div class="contentsBodyLv3">
+            名前の入力欄とセッション開始ボタンを配置したページを表示します。<br/>
+            セッション開始ボタンでセッションを開始します。<br/>
+            名前とアクセス履歴をセッション変数へ代入し、セッションの状態を管理します。<br/>
+          </div>
+          <div class="contentsHeaderLv3">セッション中</div>
+          <div class="contentsBodyLv3">
+            セッション開始時に入力した名前とページへのアクセス履歴を表示します。<br/>
+            最大5件のアクセス履歴を保持します。<br/>
+            セッション終了ボタンでセッションを終了してセッション開始前の状態にします。
+          </div>
+          <div class="contentsHeaderLv3">セッション終了</div>
+          <div class="contentsBodyLv3">
+            セッションに関連するあらゆるデータを削除します。
+            <ul>
+              <li>セッション変数</li>
+              <li>セッションID</li>
+              <li>クッキー</li>
+            </ul>
+          </div>
+          <div class="contentsHeaderLv3">ポイント</div>
+          <div class="contentsBodyLv3">
+            アクセス履歴は、$_SESSION["*****"]に配列として保持します。
+          </div>
+        </div>
+        <div class="contentsHeaderLv2">参考</div>
+        <div class="contentsBodyLv2">
+          基礎からのPHP PART05 CHAPTER19
+        </div>
+        <div class="contentsHeaderLv2">キーワード</div>
+        <div class="contentsBodyLv2">
+          <ul>
+            <li>Session</li>
+            <li>$_SESSION(スーパーグローバル変数)</li>
+            <li>配列(array)</li>
+            <li>session_start</li>
+            <li>session_destroy</li>
+            <li>count関数</li>
+            <li>array_push関数</li>
+            <li>array_shift関数</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="contentsItem contentsItemUnselected" contentsId="10">
+        <div class="contentsHeaderLv1">演習課題７</div>
+        <div class="contentsHeaderLv2">課題内容</div>
+        <div class="contentsBodyLv2">
+          課題１～６で学習したことを活用して画像掲示板を作成します。<br/>
+          サンプルの画像掲示板のログインユーザー名とパスワードはローマ字表記の苗字です。<br/>
+          例) user:okada&nbsp;password:okada<br/>
+          また、サンプルのようにスタイルに凝るひつようはありません。必要な処理ができていればよいです。<br/>
+          サンプルの画像掲示板に実際にアップロードしてもらって構いません。<br/>
+          <a target="_blank" href="./practices/practice07/login.php">サンプル</a>
+          <a target="_blank" href="./practices/practice07/code.html">サンプルコード</a>
+        </div>
+        <div class="contentsHeaderLv2">仕様</div>
+        <div class="contentsBodyLv2">
+          ＜機能要件＞
+          <ul>
+            <li>ログイン/ログアウト&nbsp;(ログイン状態をセッションで管理)</li>
+            <li>投稿の一覧表示</li>
+            <li>画像ファイルのアップロード&nbsp;(JPEG形式/最大1MB)</li>
+            <li>ログインパスワードはMD5ハッシュ値に変換して管理</li>
+            <li>ユーザーの登録や一覧の画面は必要ありません。ユーザーの登録はクエリで行います。</li>
+          </ul>
+          <br/>
+          ＜データベース定義＞
+          <ul>
+            <li><a target="_blank" href="./images/pra07_users.jpg">usersテーブル</a></li>
+            <li><a target="_blank" href="./images/pra07_entries.jpg">entriesテーブル</a></li>
+          </ul>
+          <br/>
+          ＜処理概要＞
+          <div><a target="_blank" href="./images/pra07_overview.jpg"><img src="./images/pra07_overview.jpg" width="80%" height="80%"/></a></div>
+          <div class="detail">■login.php<br/>
+            <ul>
+              <li>ユーザーID/パスワードの入力欄を用意する。</li>
+              <li>ログインボタンでlogin.phpへIDとパスワードをPOST送信する。</li>
+              <li>POSTパラメータをもとにusersテーブル内を検索し該当ユーザーが存在するか検索する。</li>
+              <li>該当するユーザーが存在しないとき、何もしない。(※画面にエラーメッセージを表示してもよい)</li>
+              <li>該当するユーザーが存在するとき、セッション変数にユーザーIDを格納して、board.phpへリダイレクトする。</li>
+            </ul>
+          </div>
+          <div class="detail">■board.php<br/>
+            <ul>
+              <li>ユーザーが有効なセッション情報を保持していない場合、login.phpへリダイレクトする。</li>
+              <li>ログアウト/アップロードのボタンを配置する。</li>
+              <li>すべての投稿を一覧で表示する。</li>
+              <li>一覧にはサムネイル画像を表示し、その画像をクリックすると別ウィンドウ(あるいは別タブ)でオリジナルの画像を表示する。</li>
+            </ul>
+          </div>
+          <div class="detail">■upload.php<br/>
+            <ul>
+              <li>ユーザーが有効なセッション情報を保持していない場合、login.phpへリダイレクトする。</li>
+              <li>アップロードボタンでupload.phpへ画像、メッセージ、投稿者のIDをPOST送信する。</li>
+              <li>POSTパラメータをもとにentoriesテーブルに投稿情報を登録する。</li>
+              <li>アップロードされたファイルをサムネイルサイズに加工し、オリジナルの画像と一緒に所定のディレクトリへ保存する。</li>
+            </ul>
+          </div>
+          <div class="detail">■logout.php<br/>
+            <ul>
+              <li>セッションの情報をすべて破棄して、login.phpへリダイレクトする。</li>
+            </ul>
+          </div><br/>
+          ＜処理詳細＞<br/>
+          <ul>
+            <li><a target="_blank" href="./images/pra07_login.php.jpg">login.php</a></li>
+            <li><a target="_blank" href="./images/pra07_board.php.jpg">board.php</a></li>
+            <li><a target="_blank" href="./images/pra07_upload.php.jpg">upload.php</a></li>
+            <li><a target="_blank" href="./images/pra07_logout.php.jpg">logout.php</a></li>
+          </ul>
+        </div>
+        <div class="contentsHeaderLv2">参考</div>
+        
+        <div class="contentsBodyLv2">
+          基礎からのPHP PART04 CHAPTER16 ファイルとディレクトリの操作<br/>
+          基礎からのPHP PART04 CHAPTER17 グラフィックの簡単な利用<br/>
+          基礎からのPHP PART05 CHAPTER21-22
+        </div>
+        <div class="contentsHeaderLv2">キーワード</div>
+        <div class="contentsBodyLv2">
+          <ul>
+            <li>MD5ハッシュ</li>
+            <li>$_SERVER(スーパーグローバル変数)</li>
+            <li>$_FILE(スーパーグローバル変数)</li>
+            <li>GD(オープンソースライブラリ)</li>
+            <li>リダイレクト</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="contentsItem contentsItemUnselected" contentsId="11">
+        <div class="contentsHeaderLv1">演習課題８</div>
+        <div class="contentsHeaderLv2">課題内容</div>
+        <div class="contentsBodyLv2">
+          演習課題７で実装した画像掲示板にページングとコメントの機能を追加します。<br/>
+          演習課題７で作成したboard.phpを/practices/practice08のディレクトリにコピーして機能を追加します。<br/>
+          <a target="_blank" href="./practices/practice08/board.php">サンプル</a>
+        </div>
+        <div class="contentsHeaderLv2">仕様</div>
+        <div class="contentsBodyLv2">
+          ＜機能要件＞
+          <ul>
+            <li>投稿一覧ページにページング機能を付加する。</li>
+            <li>投稿に対してコメント可能にする。</li>
+            <li>投稿に対するコメントを投稿一覧ページで表示する。</li>
+          </ul>
+          <br/>
+          ＜データベース定義＞
+          <ul>
+            <li><a target="_blank" href="./images/pra08_comments.jpg">commentsテーブル</a></li>
+          </ul>
+          <br/>
+          ＜処理概要＞
+          <div><a target="_blank" href="./images/pra08_overview.jpg"><img src="./images/pra08_overview.jpg" width="80%" height="80%"/></a></div>
+          <div class="detail">■board.php<br/>
+            <ul>
+              <li>演習課題７で実装した機能は変更しない。</li>
+              <li>1ページ当たりに表示する投稿数は5つとする。</li>
+              <li>先頭／前／次／後尾ページへのリンクを配置する(サンプルのようにページ番号のリンクを配置してもよい)。</li>
+              <li>ページ番号をGETパラメータで指定する。</li>
+              <li>投稿に対するコメントをすべて表示する。</li>
+            </ul>
+          </div>
+          <div class="detail">■comment.php<br/>
+            <ul>
+              <li>コメントの入力欄を配置する。</li>
+              <li>コメント対象の投稿IDはGETパラメータで指定する。</li>
+              <li>コメント送信ボタンで、投稿ID／投稿者ID／コメントをPOST送信する。</li>
+            </ul>
+          </div>
+          ＜処理詳細＞<br/>
+          <ul>
+            <li><a target="_blank" href="./images/pra08_board.php.jpg">board.php</a></li>
+            <li><a target="_blank" href="./images/pra08_comment.php.jpg">comment.php</a></li>
+          </ul>
+        </div>
+        <div class="contentsHeaderLv2">参考</div>
+        <div class="contentsBodyLv2">
+          基礎からのPHP PART05 CHAPTER21-22
+        </div>
+        <div class="contentsHeaderLv2">キーワード</div>
+        <div class="contentsBodyLv2">
+          <ul>
+            <li>WHERE句(MySQL)</li>
+            <li>LIMIT句(MySQL)</li>
+            <li>COUNT関数(MySQL)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="footer">Copyright © 2013 Central Soft Service Co.,Ltd. All rights reserved.</div>
+  </body>
+</html>

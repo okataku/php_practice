@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>演習課題５ -サンプルコード-</title>
+    <style tyle="text/css">
+      h2 {
+      border-left: 10px solid #2E9AFE;
+      padding-left: 5px;
+      }
+      
+      pre {
+      border: 1px dashed #2E9AFE;
+      padding: 20px;
+      width: 900px;
+      max-height: 600px;
+      overflow: auto;
+      background-color:
+      #2E2E2E;
+      color: #fff
+      }
+    </style>
+  </head>
+  <body>
+    <h2>cookie.php</h2>
+    <pre>
+&lt;?php
+$counter = 0;
+
+if ($_SERVER[&quot;REQUEST_METHOD&quot;] == &quot;POST&quot; &amp;&amp; isset($_POST[&quot;function&quot;])) {
+  if ($_POST[&quot;function&quot;] == &quot;1&quot;) {
+    // カウンタをリセット。
+    $counter = 1;
+    setcookie(&quot;practice05&quot;, $counter, time() + 3600 * 24 * 7);
+  } else if ($_POST[&quot;function&quot;] == &quot;2&quot;) {
+    // Cookieを削除。
+    setcookie(&quot;practice05&quot;, $counter, time() + -3600 * 24 * 7);
+  }
+} else {
+  // カウンタをインクリメント。
+  $counter = isset($_COOKIE[&quot;practice05&quot;]) &amp;&amp; preg_match(&quot;/^\d+$/&quot;, $_COOKIE[&quot;practice05&quot;]) ? (int)$_COOKIE[&quot;practice05&quot;] : 0;
+  setcookie(&quot;practice05&quot;, ++$counter, time() + 3600 * 24 * 7);
+}
+?&gt;
+
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+    &lt;title&gt;演習課題５&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div style=&quot;font-weight:bold; margin:5px 0px; padding:10px 5px; width:300px; border-bottom:1px dashed #808080;&quot;&gt;演習課題５&lt;/div&gt;
+    &lt;div&gt;
+      &lt;?php print $counter ?&gt;回目の訪問です。
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;form action=&quot;./cookie.php&quot;&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;更新&quot; /&gt;
+      &lt;/form&gt;
+      &lt;form action=&quot;./cookie.php&quot; method=&quot;POST&quot;&gt;
+        &lt;input type=&quot;hidden&quot; name=&quot;function&quot; value=&quot;1&quot; /&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;リセット&quot; /&gt;
+      &lt;/form&gt;
+      &lt;form action=&quot;./cookie.php&quot; method=&quot;POST&quot;&gt;
+        &lt;input type=&quot;hidden&quot; name=&quot;function&quot; value=&quot;2&quot; /&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;Cookie削除&quot; /&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+	</pre>
+  </body>
+</html>
