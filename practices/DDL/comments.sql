@@ -23,7 +23,7 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `comments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `entry_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `user_id` varchar(64) NOT NULL,
   `comment` text,
   `create_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
