@@ -3,7 +3,7 @@ session_start();
 
 if (!isset($_SESSION["id"]) || $_SESSION["id"] == null) {
   header("HTTP/1.1 301 Moved Permanently");
-  header("Location: practices/practice07/login.php");
+  header("Location: /practices/practice07/login.php");
 }
 
 ?>
@@ -21,7 +21,7 @@ if (!isset($_SESSION["id"]) || $_SESSION["id"] == null) {
     padding: 75px 0px 50px;
     width: 600px;
     }
-    
+
     #header {
     position: fixed;
     top: 0px;
@@ -30,7 +30,7 @@ if (!isset($_SESSION["id"]) || $_SESSION["id"] == null) {
     background-color: #fff;
     border-bottom: 1px solid #808080;
     }
-    
+
     #title {
     font-size: 20pt;
     margin: 10px 10px 5px;
@@ -39,15 +39,15 @@ if (!isset($_SESSION["id"]) || $_SESSION["id"] == null) {
     background-repeat: no-repeat;
     background-size: 25px 25px;
     }
-    
+
     #menu {
     margin: 0px 5px;
     }
-    
+
     #main {
-    
+
     }
-    
+
     #footer {
     position: fixed;
     bottom: 0px;
@@ -56,25 +56,25 @@ if (!isset($_SESSION["id"]) || $_SESSION["id"] == null) {
     height: 50px;
     width: inherit;
     }
-    
+
     .entry {
     padding: 10px 10px;
     border-bottom: 1px dashed #808080;
     width: 580px;
     }
-    
+
     .entry .info {
     margin-bottom: 5px;
     }
-    
+
     .entry .user {
-    
+
     }
-    
+
     .entry .createAt {
     margin-left: 10px;
     }
-    
+
     .entry .message {
     margin-bottom: 5px;
     }
@@ -91,11 +91,11 @@ if (!isset($_SESSION["id"]) || $_SESSION["id"] == null) {
   </div>
 
   <div id="main">
-    
+
     <?php
 	$pdo = new PDO("mysql:host=localhost;dbname=practice;", "root", "mysql", array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
 	$statement = $pdo->prepare("
-    SELECT t1.id, t1.user_id, t2.name, t1.message, t1.image, t1.thumbnail, DATE_FORMAT( t1.create_at,  '%Y年%m月%d日 %k時%i分%s秒' ) AS  `createAt` 
+    SELECT t1.id, t1.user_id, t2.name, t1.message, t1.image, t1.thumbnail, DATE_FORMAT( t1.create_at,  '%Y年%m月%d日 %k時%i分%s秒' ) AS  `createAt`
 	FROM entries AS t1 LEFT OUTER JOIN users AS t2 ON t1.user_id = t2.id
 	ORDER BY t1.create_at DESC ");
 	$statement->execute();
@@ -110,7 +110,7 @@ if (!isset($_SESSION["id"]) || $_SESSION["id"] == null) {
     }
 	?>
   </div>
-  
+
   <div id="footer">
     <div style="width: 350px; margin:10px auto 0px; font-size: 9pt; color: #808080;">Copyright © 2013 Central Soft Service Co.,Ltd. All rights reserved.</div>
   </div>

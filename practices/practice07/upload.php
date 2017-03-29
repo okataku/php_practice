@@ -10,44 +10,44 @@ session_start();
 // セッションの状態を確認します。
 if (!isset($_SESSION["id"]) || $_SESSION["id"] == null) {
   header("HTTP/1.1 301 Moved Permanently");
-  header("Location: practices/practice07/login.php");
+  header("Location: /practices/practice07/login.php");
 } else {
- $id = $_SESSION["id"]; 
+ $id = $_SESSION["id"];
 }
 
 // このブロックがアップロード処理です。
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   try {
-        
+
     if (strlen($error) == 0 && !isset($_FILES["image"])) {
       $error = "画像ファイルを指定してください。";
     }
-    
+
     if (strlen($error) == 0 && preg_match("/^image\/(jpg|jpeg|png|gif)$/i", $_FILES["image"]["type"], $matches)) {
-      $errror = "JPEG、GIF、PNG以外のファイル形式はアップロードできません。"; 
+      $errror = "JPEG、GIF、PNG以外のファイル形式はアップロードできません。";
     }
     if ($matches != null) {
       $ext = ".".strtolower($matches[1]);
       if ($ext == ".jpeg") $ext = ".jpg";
     }
-    
+
     if (strlen($error) == 0 && $_FILES["image"]["size"] == 0) {
       $error = "画像ファイルのサイズが0バイトです。";
     }
-    
+
     if (strlen($error) == 0 && $_FILES["image"]["size"] > 1024 * 1024) {
       $error = "1Mバイトを超える画像ファイルはアップロードできません。";
     }
-    
+
     if (strlen($error) == 0 && $_FILES["image"]["error"] != UPLOAD_ERR_OK) {
-      $error = "アップロードが失敗しました。"; 
+      $error = "アップロードが失敗しました。";
     }
-    
+
     if (strlen($error) == 0) {
       if (isset($_POST["message"]) && strlen($_POST["message"]) > 0) {
        	$message = nl2br(htmlspecialchars($_POST["message"]));
       }
-      
+
       sleep(1);
       $dt = date("YmdHis", time());
       $image = $dt.$ext;
@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $thumbnail = "thumb_".$dt.$ext;
       $thumbnailPath = $dir.$thumbnail;
       rename($_FILES["image"]["tmp_name"], $imagePath);
-      
+
       // サムネイルを作成します。
       $length = 200;
       list($w, $h) = getimagesize($imagePath);
@@ -73,11 +73,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($ext == ".jpg") imagejpeg($dst, $thumbnailPath);
         else if ($ext == ".png") imagepng($dst, $thumbnailPath);
 		else if ($ext == ".gif") imagegif($dst, $thumbnailPath);
-          
+
       } else {
         copy($imagePath, $thumbnailPath);
       }
-      
+
       // データベースに登録します。
       $pdo = new PDO("mysql:host=localhost;dbname=practice;", "root", "mysql", array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
       $commandText = "insert into entries (user_id, message, image, thumbnail, create_at) values (:p1, :p2, :p3, :p4, NOW())";
@@ -108,11 +108,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       width: 600px;
       margin: 0px auto;
     }
-    
+
     #header {
-    
+
     }
-    
+
     #title {
     font-size: 18pt;
       margin: 10px 10px 5px;
@@ -121,11 +121,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       background-repeat: no-repeat;
       background-size: 25px 25px;
     }
-    
+
     #menu {
         margin: 0px 5px;
     }
-    
+
     #main {
       margin: 10px 0px 10px;
       padding-top: 30px;
@@ -134,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       border-top: 1px solid #808080;
       border-bottom: 1px solid #808080;
     }
-    
+
     #footer {
       padding: 0px 10x;
     }
@@ -154,7 +154,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php
 			if (strlen($error) > 0) {
             	printf("<tr><td colspan=\"2\" style=\"color:red\">%s</td></tr>", $error);
-            }              
+            }
             ?>
             <tr>
               <td>ファイル</td>
