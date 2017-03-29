@@ -1,5 +1,5 @@
 <?php
-$pdo = new PDO("mysql:host=localhost;dbname=practice_x;", "root", "css0515", array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
+$pdo = new PDO("mysql:host=localhost;dbname=practice;", "root", "mysql", array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
 $statement = $pdo->prepare("select * from human");
 $statement->execute();
 ?>
@@ -14,14 +14,14 @@ $statement->execute();
       	margin: 5px;
       	border-spacing: 0;
       }
-      
+
       thead td {
       	color: #FFF;
       	background-color: #3C3C3C;
       	border-bottom: 1px dashed #808080;
       	padding: 3px;
       }
-      
+
       tbody td {
       	border-bottom: 1px dashed #808080;
       	padding: 3px 10px;
@@ -59,7 +59,7 @@ $statement->execute();
       }
       print "</tbody></table>";
     }
-	?>  
+	?>
     </div>
     <br/>
     <div>

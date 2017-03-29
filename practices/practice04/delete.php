@@ -4,7 +4,7 @@ $id = -9999;
 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && strlen($_GET["id"])) {
   try {
-    $pdo = new PDO("mysql:host=localhost;dbname=practice_x;", "root", "css0515", array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
+    $pdo = new PDO("mysql:host=localhost;dbname=practice;", "root", "mysql", array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
     $statement = $pdo->prepare("delete from human where id = :id");
     $statement->bindValue("id", $_GET["id"], PDO::PARAM_INT);
     $statement->execute();
@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && strlen($_GET["i
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>演習課題４ -レコード削除-</title>
   </head>
-  <body>  
+  <body>
     <div style="font-weight:bold; margin:5px 0px; padding:10px 5px; width:300px; border-bottom:1px dashed #808080;">humanテーブルのレコード削除</div>
     <div>
       	<br/><?php print $message ?>

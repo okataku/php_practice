@@ -41,7 +41,7 @@ if ($_SERVER[&quot;REQUEST_METHOD&quot;] == &quot;GET&quot;) {
   }
 }
 
-$pdo = new PDO(&quot;mysql:host=localhost;dbname=practice_x;&quot;, &quot;root&quot;, &quot;css0515&quot;, array(PDO::MYSQL_ATTR_INIT_COMMAND =&gt; &quot;SET CHARACTER SET `utf8`&quot;));
+$pdo = new PDO(&quot;mysql:host=localhost;dbname=practice;&quot;, &quot;root&quot;, &quot;mysql&quot;, array(PDO::MYSQL_ATTR_INIT_COMMAND =&gt; &quot;SET CHARACTER SET `utf8`&quot;));
 $statement = $pdo-&gt;query(&quot;select count(*) from entries&quot;);
 $pages = ceil(((int)$statement-&gt;fetchColumn()) / $limit);
 if ($page &gt; $pages) $page = $pages;
@@ -221,7 +221,7 @@ if (!isset($_SESSION[&quot;id&quot;]) || strlen($_SESSION[&quot;id&quot;]) == 0)
 }
 
 if ($_SERVER[&quot;REQUEST_METHOD&quot;] == &quot;GET&quot; &amp;&amp; isset($_GET[&quot;id&quot;]) &amp;&amp; strlen($_GET[&quot;id&quot;]) &gt; 0) {
-  $pdo = new PDO(&quot;mysql:host=localhost;dbname=practice_x;&quot;, &quot;root&quot;, &quot;css0515&quot;, array(PDO::MYSQL_ATTR_INIT_COMMAND =&gt; &quot;SET CHARACTER SET `utf8`&quot;));
+  $pdo = new PDO(&quot;mysql:host=localhost;dbname=practice;&quot;, &quot;root&quot;, &quot;mysql&quot;, array(PDO::MYSQL_ATTR_INIT_COMMAND =&gt; &quot;SET CHARACTER SET `utf8`&quot;));
   $statement = $pdo-&gt;prepare(&quot;select t2.name, DATE_FORMAT( t1.create_at,  '%Y年%m月%d日 %k時%i分%s秒' ) AS  `create_at`  from entries as t1 left outer join users as t2 on t1.user_id = t2.id where t1.id = :id&quot;);
   $statement-&gt;bindValue(&quot;id&quot;, $_GET[&quot;id&quot;], PDO::PARAM_STR);
   $statement-&gt;execute();
@@ -235,7 +235,7 @@ if ($_SERVER[&quot;REQUEST_METHOD&quot;] == &quot;GET&quot; &amp;&amp; isset($_G
   }
 } else if ($_SERVER[&quot;REQUEST_METHOD&quot;] == &quot;POST&quot;) {
   if (isset($_POST[&quot;entryId&quot;]) &amp;&amp; isset($_POST[&quot;comment&quot;])) {
-    $pdo = new PDO(&quot;mysql:host=localhost;dbname=practice_x;&quot;, &quot;root&quot;, &quot;css0515&quot;, array(PDO::MYSQL_ATTR_INIT_COMMAND =&gt; &quot;SET CHARACTER SET `utf8`&quot;));
+    $pdo = new PDO(&quot;mysql:host=localhost;dbname=practice;&quot;, &quot;root&quot;, &quot;mysql&quot;, array(PDO::MYSQL_ATTR_INIT_COMMAND =&gt; &quot;SET CHARACTER SET `utf8`&quot;));
     $statement = $pdo-&gt;prepare(&quot;insert into comments (entry_id, user_id, comment, create_at) values (:p1, :p2, :p3, now())&quot;);
     $statement-&gt;bindValue(&quot;p1&quot;, $_POST[&quot;entryId&quot;], PDO::PARAM_INT);
     $statement-&gt;bindValue(&quot;p2&quot;, $userId, PDO::PARAM_STR);

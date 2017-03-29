@@ -12,7 +12,7 @@ if (isset($_SESSION["id"]) && $_SESSION["id"] != null) {
 // ログイン処理を行います。
 // ログインが成功したとき掲示板ページへリダイレクトします。
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && isset($_POST["password"])) {
-  $pdo = new PDO("mysql:host=localhost;dbname=practice_x;", "root", "css0515", array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
+  $pdo = new PDO("mysql:host=localhost;dbname=practice;", "root", "mysql", array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
   $statement = $pdo->prepare("select id from users where id = :id and password=md5(:password)");
   $statement->bindValue("id", $_POST["id"], PDO::PARAM_STR);
   $statement->bindValue("password", $_POST["password"], PDO::PARAM_STR);

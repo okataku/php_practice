@@ -12,7 +12,7 @@ $weight = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && strlen($_GET["id"]) > 0) {
   try {
-    $pdo = new PDO("mysql:host=localhost;dbname=practice_x;", "root", "css0515", array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
+    $pdo = new PDO("mysql:host=localhost;dbname=practice;", "root", "mysql", array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
     $statement = $pdo->prepare("select * from human where id = :id");
     $statement->bindValue("id", $_GET["id"], PDO::PARAM_INT);
     $statement->execute();
@@ -42,66 +42,66 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && strlen($_GET["i
   if (isset($_POST["day"])) $day = $_POST["day"];
   if (isset($_POST["height"])) $height = $_POST["height"];
   if (isset($_POST["weight"])) $weight = $_POST["weight"];
-  
+
   if (strlen($error) == 0 && strlen($id) == 0) {
     $error = "IDが指定されていません。";
   }
-  
+
   if (strlen($error) == 0 && strlen($name) == 0) {
     $error = "名前を入力してください。";
   }
-  
+
   if (strlen($error) == 0 && strlen($sex) == 0) {
     $error = "性別を入力してください。";
   }
-  
+
   if (strlen($error) == 0 && strlen($year) == 0) {
     $error = "生年月日の年を入力してください。";
   }
-  
+
   if (strlen($error) == 0 && strlen($month) == 0) {
     $error = "生年月日の月を入力してください。";
   }
-  
+
   if (strlen($error) == 0 && strlen($day) == 0) {
     $error = "生年月日の日を入力してください。";
   }
-  
+
   if (strlen($error) == 0 && strlen($height) == 0) {
     $error = "身長を入力してください。";
   }
-  
+
   if (strlen($error) == 0 && strlen($weight) == 0) {
     $error = "体重を入力してください。";
   }
-  
+
   if (strlen($error) == 0 && !preg_match("/^\d+$/", $year)) {
     $error = "生年月日の年は整数を入力してください。";
   }
-  
+
   if (strlen($error) == 0 && !preg_match("/^\d+$/", $month)) {
     $error = "生年月日の月は整数を入力してください。";
   }
-  
+
   if (strlen($error) == 0 && !preg_match("/^\d+$/", $day)) {
     $error = "生年月日の日は整数を入力してください。";
   }
-  
+
   if (strlen($error) == 0 && !checkdate($month, $day, $year)) {
     $error = "生年月日に正しい日付を入力してください。";
   }
-  
+
   if (strlen($error) == 0 && !is_numeric($height)) {
     $error = "身長は数値を入力してください。";
   }
-  
+
   if (strlen($error) == 0 && !is_numeric($weight)) {
     $error = "体重は数値を入力してください。";
   }
-  
+
   try {
     if (strlen($error) == 0) {
-      $pdo = new PDO("mysql:host=localhost;dbname=practice_x;", "root", "css0515", array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
+      $pdo = new PDO("mysql:host=localhost;dbname=practice;", "root", "mysql", array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
       $statement = $pdo->prepare("update human set name=:name, sex=:sex, birthday=:birthday, height=:height, weight=:weight where id = :id");
       $statement->bindValue("id", $id, PDO::PARAM_INT);
       $statement->bindValue("name", $name, PDO::PARAM_STR);

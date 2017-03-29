@@ -79,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       }
       
       // データベースに登録します。
-      $pdo = new PDO("mysql:host=localhost;dbname=practice_x;", "root", "css0515", array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
+      $pdo = new PDO("mysql:host=localhost;dbname=practice;", "root", "mysql", array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
       $commandText = "insert into entries (user_id, message, image, thumbnail, create_at) values (:p1, :p2, :p3, :p4, NOW())";
       $statement = $pdo->prepare($commandText);
       $statement->bindValue("p1", $id, PDO::PARAM_STR);

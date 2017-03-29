@@ -13,7 +13,7 @@ if (!isset($_SESSION["id"]) || strlen($_SESSION["id"]) == 0) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && strlen($_GET["id"]) > 0) {
-  $pdo = new PDO("mysql:host=localhost;dbname=practice_x;", "root", "css0515", array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
+  $pdo = new PDO("mysql:host=localhost;dbname=practice;", "root", "mysql", array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
   $statement = $pdo->prepare("select t2.name, DATE_FORMAT( t1.create_at,  '%Y年%m月%d日 %k時%i分%s秒' ) AS  `create_at`  from entries as t1 left outer join users as t2 on t1.user_id = t2.id where t1.id = :id");
   $statement->bindValue("id", $_GET["id"], PDO::PARAM_STR);
   $statement->execute();
@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && strlen($_GET["i
   }
 } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (isset($_POST["entryId"]) && isset($_POST["comment"])) {
-    $pdo = new PDO("mysql:host=localhost;dbname=practice_x;", "root", "css0515", array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
+    $pdo = new PDO("mysql:host=localhost;dbname=practice;", "root", "mysql", array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
     $statement = $pdo->prepare("insert into comments (entry_id, user_id, comment, create_at) values (:p1, :p2, :p3, now())");
     $statement->bindValue("p1", $_POST["entryId"], PDO::PARAM_INT);
     $statement->bindValue("p2", $userId, PDO::PARAM_STR);

@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
   }
 }
 
-$pdo = new PDO("mysql:host=localhost;dbname=practice_x;", "root", "css0515", array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
+$pdo = new PDO("mysql:host=localhost;dbname=practice;", "root", "mysql", array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET CHARACTER SET `utf8`"));
 $statement = $pdo->query("select count(*) from entries");
 $pages = ceil(((int)$statement->fetchColumn()) / $limit);
 if ($page > $pages) $page = $pages;
