@@ -101,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>CSS 画像掲示板 -画像アップロード-</title>
+  <title>SAMPLE 画像掲示板 -画像アップロード-</title>
 
   <style type="text/css">
     body {

@@ -27,7 +27,7 @@ $offset = $page * $limit - 5;
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>CSS 画像掲示板</title>
+  <title>SAMPLE 画像掲示板</title>
 
   <style type="text/css">
     body {

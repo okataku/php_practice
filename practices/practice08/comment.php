@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && strlen($_GET["i
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>CSS 画像掲示板 -コメント-</title>
+    <title>SAMPLE 画像掲示板 -コメント-</title>
 
     <style type="text/css">
       body {

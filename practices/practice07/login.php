@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && isset($_POST[
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>CSS 画像掲示板 -ログイン-</title>
+  <title>SAMPLE 画像掲示板 -ログイン-</title>
 
   <style type="text/css">
     body {
